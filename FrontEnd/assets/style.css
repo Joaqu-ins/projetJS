@@ -95,7 +95,16 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+nav a {
+	text-decoration: none;
+	color: #3D3D3D;
+}
+
+nav a:visited {
+	color: #3D3D3D;
+}
+
+nav a:hover {
 	color: #B1663C;
 }
 #introduction {
@@ -121,6 +130,15 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+#portfolio button {
+	border-radius: 25px;
+	color: #1D6154;
+	border:solid 1px #1D6154;
+	background-color: white;
+	padding: 2.5px 10px 2.5px 10px;
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -186,3 +204,116 @@ footer nav ul {
 	margin: 2em
 }
 
+
+/** Page Login***********************************************************************************/
+
+
+main {
+	min-height: 600px;
+}
+
+.form-login {
+	width: 30%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.title-login {
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+.form-login a {
+	display: block;
+	margin: auto;
+	color: #3D3D3D;
+}
+
+.form-login a:hover {
+	color: #B1663C;
+}
+
+
+.label-in-form-login{
+	margin-bottom: 5px;
+	color: #3D3D3D;
+}
+
+.email, .password {
+	display: flex;
+	flex-direction: column;
+}
+
+#email, #password {
+	height: 38px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: solid 1px white;
+}
+
+.btn-submit {
+
+	background-color:#1D6154 ;
+	color: white;
+	width: 50%;
+	margin: auto;
+	height: 35px;
+	border: solid 1px #1D6154;
+	border-radius: 25px;
+}
+
+
+ /* The snackbar - position it at the bottom and in the middle of the screen */
+ #snackbar404, #snackbar401 {
+	visibility: hidden; /* Hidden by default. Visible on click */
+	min-width: 250px; /* Set a default minimum width */
+	margin-left: -125px; /* Divide value of min-width by 2 */
+	background-color: #333; /* Black background color */
+	color: #fff; /* White text color */
+	text-align: center; /* Centered text */
+	border-radius: 2px; /* Rounded borders */
+	padding: 16px; /* Padding */
+	position: fixed; /* Sit on top of the screen */
+	z-index: 1; /* Add a z-index if needed */
+	left: 50%; /* Center the snackbar */
+	bottom: 30px; /* 30px from the bottom */
+  }
+  
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar404.show, #snackbar401.show {
+	visibility: visible; /* Show the snackbar */
+	/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+	However, delay the fade out process for 2.5 seconds */
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+	from {bottom: 30px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+	from {bottom: 30px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
+  } 
+
+
+
+footer {
+	height: 60px;
+	display: flex;
+	justify-content: flex-end;
+}
