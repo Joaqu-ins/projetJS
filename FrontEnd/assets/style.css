@@ -240,12 +240,27 @@ nav a:hover {
 }
 
 
+.titleAndButton {
+
+	display: flex;
+  justify-content: center;
+  padding-left: 13%;
+}
+
 #btn-change-Work {
+	padding-left: 2%;
+	padding-top: 8px;
 	border: none;
 	color: #3D3D3D;
 	background-color: #FFFEF8;
 	color: #000000;
+	width: 130px;
 }
+
+#btn-change-Work i {
+	padding-right: 5%;
+}
+
 
 #btn-change-Work:hover {
 	color: #B1663C;
@@ -381,7 +396,7 @@ main {
 	font-size: 10px;
 }
 
-#crossClosing {
+.closeModal {
 
 	border: none;
 	background-color: transparent;
@@ -391,7 +406,7 @@ main {
 	font-size: 125%;
 }
 
-#crossClosing:hover {
+.closeModal:hover {
 	cursor: pointer;
 }
 

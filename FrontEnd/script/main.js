@@ -146,7 +146,6 @@ const buttonHR = document.querySelector(".bttnHR")
         //allocation id of work to the button
         let idWork= toReturn[i].id;
         bttnDelete.setAttribute('id',idWork);
-        console.log(bttnDelete);
 
         // displaying Work's image 
         let image = document.createElement("img");
@@ -159,18 +158,56 @@ const buttonHR = document.querySelector(".bttnHR")
 
     //Displaying modal for delete works
     const html= document.querySelector(".html");
-    const modale1= document.getElementById("modal1");
+    const modals= document.querySelectorAll(".modal")
+    const modal1= document.getElementById("modal1");
     const bttnChangeWorks= document.getElementById("btn-change-Work")
-    bttnChangeWorks.addEventListener("click",()=>{
-
-    modale1.style.display= "block";
-    html.style.backgroundColor= "#0000004D";
+    const crossForClose= document.querySelector(".closeModal")
 
 
 
+// function for close one modal to specify
+    const openModal= function(e) {
+
+        e.removeAttribute('aria-hidden');
+        e.setAttribute('aria-modal',true);
+        e.style.display= "block";
+        html.style.backgroundColor= "#0000004D";
+        crossForClose.focus();
+    };
 
 
-    })
+// function for closes all modals    
+    const closeModal= function () {
+
+        modals.forEach(modal => {
+        modal.removeAttribute('aria-modal');
+        modal.setAttribute('aria-hidden',true);
+        modal.style.display= "none";
+        html.style.backgroundColor= "#FFFEF8";
+    });
+    };
+
+
+
+// Oppening modal1 (displaying all works for delete)
+    bttnChangeWorks.addEventListener("click", () => openModal(modal1));
+// Closing modal1
+    crossForClose.addEventListener("click", () => closeModal(modal1));
+    
+
+// Allow the closing of the modal
+    window.addEventListener("keydown",function(e){
+        if (e.key==="Escape"|| e.key==="Esc") {
+            closeModal(modals);
+        } 
+    });
+
+   
+  
+
+
+
+    
     
     
     
