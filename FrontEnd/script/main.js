@@ -128,5 +128,26 @@ const buttonHR = document.querySelector(".bttnHR")
     // Menaging "Appartements and restaurants" button
     filterCategory(buttonHR, "Hotels & restaurants");
 
+
+
+    //Loop for display works in modal
+    let galleryPhoto = document.querySelector(".galleryPhoto");
+    for (let i = 0; i < imageS.length; i++) {
+
+        let image1 = document.createElement("img");
+        image1.src = imageS[1];
+
+        let figureGallery = document.createElement("figure");
+        let image = document.createElement("img");
+        image.src = imageS[i];
+        figureGallery.appendChild(image);
+        galleryPhoto.appendChild(figureGallery);
+
+
+        
+    }
+
+
+
 });
 
