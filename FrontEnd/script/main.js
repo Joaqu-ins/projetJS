@@ -132,21 +132,49 @@ const buttonHR = document.querySelector(".bttnHR")
 
     //Loop for display works in modal
     let galleryPhoto = document.querySelector(".galleryPhoto");
-    for (let i = 0; i < imageS.length; i++) {
+    for (let i = 0; i < toReturn.length; i++) {
 
-        let image1 = document.createElement("img");
-        image1.src = imageS[1];
-
+        //adding button containing icon delete
         let figureGallery = document.createElement("figure");
+        let bttnDelete= document.createElement("button");
+        bttnDelete.className= "bttnDeleteWork";
+        let iconDelete= document.createElement("i");
+        iconDelete.className= "fa-solid fa-trash-can";
+        bttnDelete.appendChild(iconDelete);
+        figureGallery.appendChild(bttnDelete);
+      
+        //allocation id of work to the button
+        let idWork= toReturn[i].id;
+        bttnDelete.setAttribute('id',idWork);
+        console.log(bttnDelete);
+
+        // displaying Work's image 
         let image = document.createElement("img");
-        image.src = imageS[i];
+        image.src = toReturn[i].imageUrl;
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
-
-
         
     }
+    
 
+    //Displaying modal for delete works
+    const html= document.querySelector(".html");
+    const modale1= document.getElementById("modal1");
+    const bttnChangeWorks= document.getElementById("btn-change-Work")
+    bttnChangeWorks.addEventListener("click",()=>{
+
+    modale1.style.display= "block";
+    html.style.backgroundColor= "#0000004D";
+
+
+
+
+
+    })
+    
+    
+    
+    
 
 
 });
