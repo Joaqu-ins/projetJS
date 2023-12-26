@@ -33,19 +33,19 @@ let recoveryWorks = (async function fetchWorks() {
 
 recoveryWorks.then(() => { // When promise is resolved:
 
-    
-// Targeting
-let figureS = document.querySelectorAll(".work");
-const buttonTOUS = document.querySelector(".bttnTous")
-const buttonObjet = document.querySelector(".bttnObjets")
-const buttonApparts = document.querySelector(".bttnApparts")
-const buttonHR = document.querySelector(".bttnHR")
+
+    // Targeting
+    let figureS = document.querySelectorAll(".work");
+    const buttonTOUS = document.querySelector(".bttnTous")
+    const buttonObjet = document.querySelector(".bttnObjets")
+    const buttonApparts = document.querySelector(".bttnApparts")
+    const buttonHR = document.querySelector(".bttnHR")
 
 
 
 
     // Function for display all the works //////////////////////////////////////////////////////////////
-    function displayAllWorks() {    
+    function displayAllWorks() {
 
         // Code to reach pictures of all works
         imageS = toReturn.map(dataWorks => dataWorks.imageUrl)
@@ -108,7 +108,7 @@ const buttonHR = document.querySelector(".bttnHR")
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    
+
     // Maneging "Tous" button
     buttonTOUS.addEventListener("click", () => {
         // delete all the works allready displayed
@@ -131,88 +131,145 @@ const buttonHR = document.querySelector(".bttnHR")
 
 
     //Loop for display works in modal
-    let galleryPhoto = document.querySelector(".galleryPhoto");
+    const galleryPhoto = document.querySelector(".galleryPhoto");
     for (let i = 0; i < toReturn.length; i++) {
 
         //adding button containing icon delete
-        let figureGallery = document.createElement("figure");
-        let bttnDelete= document.createElement("button");
-        bttnDelete.className= "bttnDeleteWork";
-        let iconDelete= document.createElement("i");
-        iconDelete.className= "fa-solid fa-trash-can";
+        const figureGallery = document.createElement("figure");
+        const bttnDelete = document.createElement("button");
+        bttnDelete.className = "bttnDeleteWork";
+        const iconDelete = document.createElement("i");
+        iconDelete.className = "fa-solid fa-trash-can";
         bttnDelete.appendChild(iconDelete);
         figureGallery.appendChild(bttnDelete);
-      
+
         //allocation id of work to the button
-        let idWork= toReturn[i].id;
-        bttnDelete.setAttribute('id',idWork);
+        let idWork = toReturn[i].id;
+        bttnDelete.setAttribute('id', idWork);
 
         // displaying Work's image 
-        let image = document.createElement("img");
+        const image = document.createElement("img");
         image.src = toReturn[i].imageUrl;
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
-        
+
     }
-    
+
 
     //Displaying modal for delete works
-    const html= document.querySelector(".html");
-    const modals= document.querySelectorAll(".modal")
-    const modal1= document.getElementById("modal1");
-    const bttnChangeWorks= document.getElementById("btn-change-Work")
-    const crossForClose= document.querySelector(".closeModal")
-
-
-
-// function for close one modal to specify
-    const openModal= function(e) {
-
-        e.removeAttribute('aria-hidden');
-        e.setAttribute('aria-modal',true);
-        e.style.display= "block";
-        html.style.backgroundColor= "#0000004D";
-        crossForClose.focus();
-    };
-
-
-// function for closes all modals    
-    const closeModal= function () {
-
-        modals.forEach(modal => {
-        modal.removeAttribute('aria-modal');
-        modal.setAttribute('aria-hidden',true);
-        modal.style.display= "none";
-        html.style.backgroundColor= "#FFFEF8";
-    });
-    };
-
-
-
-// Oppening modal1 (displaying all works for delete)
-    bttnChangeWorks.addEventListener("click", () => openModal(modal1));
-// Closing modal1
-    crossForClose.addEventListener("click", () => closeModal(modal1));
-    
-
-// Allow the closing of the modal
-    window.addEventListener("keydown",function(e){
-        if (e.key==="Escape"|| e.key==="Esc") {
-            closeModal(modals);
-        } 
-    });
-
-   
+    const html = document.querySelector(".html");
+    const modal = document.querySelector(".modal")
+    const modal1 = document.getElementById("modal1");
+    const bttnChangeWorks = document.getElementById("btn-change-Work")
+    const crossForClose = document.querySelector(".closeModal")
   
 
 
 
-    
-    
-    
-    
-    
+
+    // function for close one modal to specify
+    const openModal = function (e) {
+
+        e.removeAttribute('aria-hidden');
+        e.setAttribute('aria-modal', true);
+        e.style.display = "block";
+        html.style.backgroundColor = "#0000004D";
+        crossForClose.focus();
+    };
+
+
+    // function for closes all modals    
+    const closeModal = function () {
+
+            modal.removeAttribute('aria-modal');
+            modal.setAttribute('aria-hidden', true);
+            modal.style.display = "none";
+            html.style.backgroundColor = "#FFFEF8";
+        
+    };
+
+
+
+    // Oppening modal1 (displaying all works for delete)
+    bttnChangeWorks.addEventListener("click", () => openModal(modal1));
+    // Closing modal1
+    crossForClose.addEventListener("click", () => closeModal(modal1));
+
+
+   
+
+
+    // Allow the closing of the modal and menaging tabulation rules
+    let focusablesElements = [];
+    modal.addEventListener("keydown", function (e) {
+
+        if (e.key === "Tab") {
+            e.preventDefault();
+
+            //closing part
+            if (e.key === "Escape" || e.key === "Esc") {
+                closeModal(modals);
+            }
+
+            // tabulations rules
+
+            //Building an array including all buttons in the modal
+            const bttnsInModal = Array.from(modal.querySelectorAll("aside button"));
+            focusablesElements.push(...bttnsInModal);
+            //searching the index of the button focused
+            let index = focusablesElements.indexOf(modal.querySelector(':focus'));
+
+            if (e.shiftKey === true) { index--; }
+
+            else { index++; }
+
+            if (index < 0) { index = focusablesElements.length - 1; }
+
+            if (index >= focusablesElements.length) { index = 0; }
+            //we put the focus on the indexed button
+            focusablesElements[index].focus();
+        }
+
+        else 
+        {return;}
+    });
+
+
+
+    // Display button "btnChangeWork" if "token" and "id" are saved
+    const testUserId = window.localStorage.getItem("userId");
+    const testToken = window.localStorage.getItem("token");
+    const btnChangeWork = document.getElementById("btn-change-Work");
+
+    if (testToken && testUserId !== null) { btnChangeWork.style.display = "block" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 });
+
+
+
 

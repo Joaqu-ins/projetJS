@@ -47,9 +47,9 @@
 		</section>
 		<section class="portfolio" id="portfolio">
 
-		<div class="titleAndButton">
+		<div class="titleAndButton" >
 			<h2>Mes Projets</h2>
-			<button id="btn-change-Work"> <i class="fa-regular fa-pen-to-square"></i> modifier</button>
+			<button id="btn-change-Work" style="display: none;"> <i class="fa-regular fa-pen-to-square"></i> modifier</button>
 		</div>
 	
 
@@ -112,11 +112,11 @@
 
 
 <!-- Modale pour modifier photos -->
-<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="titleModal" style="display: none;">
+<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="titleModal" style="display: none;">
 
 	<div class="modal-wrapper">
 
-		<button type="submit" class="closeModal"><i class="fa-solid fa-xmark"></i></button>
+		<button class="closeModal"><i class="fa-solid fa-xmark"></i></button>
 		
 
 		<h3 class="titleModal">Galerie photo</h3>
@@ -132,7 +132,7 @@
 			<div class="HR"></div>
 
 		
-			<button id="addPhoto">Ajouter une photo</button>
+			<button class="lastBtnInModal" id="addPhoto">Ajouter une photo</button>
 
 		</form>
 	</div>
