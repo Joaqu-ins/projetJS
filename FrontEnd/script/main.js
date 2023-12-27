@@ -130,7 +130,7 @@ recoveryWorks.then(() => { // When promise is resolved:
 
 
 
-    //Loop for display works in modal
+    //Loop for display works in modal1 //////////////////////////////////////////////////////////////////////////////
     const galleryPhoto = document.querySelector(".galleryPhoto");
     for (let i = 0; i < toReturn.length; i++) {
 
@@ -154,17 +154,26 @@ recoveryWorks.then(() => { // When promise is resolved:
         galleryPhoto.appendChild(figureGallery);
 
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    //Displaying modal for delete works
+
+
+    // Display button "btnChangeWork" if "token" and "id" are saved ////////////////////////////////////////////////
+    const testUserId = window.localStorage.getItem("userId");
+    const testToken = window.localStorage.getItem("token");
+    const btnChangeWork = document.getElementById("btn-change-Work");
+
+    if (testToken && testUserId !== null) { btnChangeWork.style.display = "block" }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     const html = document.querySelector(".html");
     const modal = document.querySelector(".modal")
     const modal1 = document.getElementById("modal1");
+    const modal2 = document.getElementById("modal2");
     const bttnChangeWorks = document.getElementById("btn-change-Work")
     const crossForClose = document.querySelector(".closeModal")
-  
-
-
 
 
     // function for close one modal to specify
@@ -177,29 +186,58 @@ recoveryWorks.then(() => { // When promise is resolved:
         crossForClose.focus();
     };
 
-
     // function for closes all modals    
-    const closeModal = function () {
-
-            modal.removeAttribute('aria-modal');
-            modal.setAttribute('aria-hidden', true);
-            modal.style.display = "none";
-            html.style.backgroundColor = "#FFFEF8";
+    const closeModal = function (e) {
         
+        e.removeAttribute('aria-modal');
+        e.setAttribute('aria-hidden', true);
+        e.style.display = "none";
+        html.style.backgroundColor = "#FFFEF8";
     };
 
-
-
-    // Oppening modal1 (displaying all works for delete)
+    // Menaging modal1 (displaying all works for delete) ////////////////////////////////////
+    // Oppening
     bttnChangeWorks.addEventListener("click", () => openModal(modal1));
-    // Closing modal1
+    // Closing
     crossForClose.addEventListener("click", () => closeModal(modal1));
+    //////////////////////////////////////////////////////////////////////////////////////////
 
 
-   
+    // Menaging modal2 (addPhoto) ///////////////////////////////////////////////////////////
+    const btnAddPhoto = document.getElementById('btnAddPhoto');
+    const crossForclose2 = document.getElementById("crossForclose2");
+
+    btnAddPhoto.addEventListener("click", () => {
+        openModal(modal2);
+        closeModal(modal1);
+        html.style.backgroundColor = "#0000004D";
+    });
+
+    crossForclose2.addEventListener("click", () => {
+        closeModal(modal2);
+    });
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    // Allow the closing of the modal and menaging tabulation rules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Allow the closing of the modal and menaging tabulation rules //////////////////////////////////////////////////////
     let focusablesElements = [];
     modal.addEventListener("keydown", function (e) {
 
@@ -208,10 +246,8 @@ recoveryWorks.then(() => { // When promise is resolved:
 
             //closing part
             if (e.key === "Escape" || e.key === "Esc") {
-                closeModal(modals);
+                closeModal(modal);
             }
-
-            // tabulations rules
 
             //Building an array including all buttons in the modal
             const bttnsInModal = Array.from(modal.querySelectorAll("aside button"));
@@ -220,28 +256,22 @@ recoveryWorks.then(() => { // When promise is resolved:
             let index = focusablesElements.indexOf(modal.querySelector(':focus'));
 
             if (e.shiftKey === true) { index--; }
-
             else { index++; }
 
             if (index < 0) { index = focusablesElements.length - 1; }
-
             if (index >= focusablesElements.length) { index = 0; }
+
             //we put the focus on the indexed button
             focusablesElements[index].focus();
         }
 
-        else 
-        {return;}
+        else { return; }
     });
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-    // Display button "btnChangeWork" if "token" and "id" are saved
-    const testUserId = window.localStorage.getItem("userId");
-    const testToken = window.localStorage.getItem("token");
-    const btnChangeWork = document.getElementById("btn-change-Work");
 
-    if (testToken && testUserId !== null) { btnChangeWork.style.display = "block" }
 
 
 

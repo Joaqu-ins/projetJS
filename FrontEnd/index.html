@@ -13,8 +13,8 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-	crossorigin="anonymous" referrerpolicy="no-referrer">
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 
 <body>
@@ -47,11 +47,12 @@
 		</section>
 		<section class="portfolio" id="portfolio">
 
-		<div class="titleAndButton" >
-			<h2>Mes Projets</h2>
-			<button id="btn-change-Work" style="display: none;"> <i class="fa-regular fa-pen-to-square"></i> modifier</button>
-		</div>
-	
+			<div class="titleAndButton">
+				<h2>Mes Projets</h2>
+				<button id="btn-change-Work" style="display: none;"> <i class="fa-regular fa-pen-to-square"></i>
+					modifier</button>
+			</div>
+
 
 			<div class="buttnFilter">
 				<button class="bttnTous">Tous</button>
@@ -108,83 +109,67 @@
 				<input type="submit" value="Envoyer">
 			</form>
 		</section>
-	</main>
 
 
-<!-- Modale pour modifier photos -->
-<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="titleModal" style="display: none;">
+		<!-- Modale pour modifier photos -->
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
+			aria-labelledby="titleModal" style="display: none;">
 
-	<div class="modal-wrapper">
+			<div class="modal-wrapper">
 
-		<button class="closeModal"><i class="fa-solid fa-xmark"></i></button>
-		
+				<button class="closeModal"><i class="fa-solid fa-xmark"></i></button>
 
-		<h3 class="titleModal">Galerie photo</h3>
+				<h3 class="titleModal">Galerie photo</h3>
 
+				<div class="galleryPhoto">
+				</div>
 
-			<div class="galleryPhoto">
-
-
-
-				
-			</div>
-
-			<div class="HR"></div>
-
-		
-			<button class="lastBtnInModal" id="addPhoto">Ajouter une photo</button>
-
-		</form>
-	</div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modale pour ajout de photos -->
-	<!-- <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="titleModa2">
-	
-		<div class="modal-wrapper">
-	
-			<h3 class="titleModal">Ajout photo</h3>
-	
-			<form action="" class="form-addWork">
-	
-				<label for="fileWork">Selectionner le projet</label>
-				<input type="file" name="fileWork" id="fileWork">
-	
-				<label for="titleWork">Titre</label>
-				<input type="text" name="titleWork" id="titleWork">
-	
-				<label for="category">Catégorie</label>
-				<select name="category" id="category">
-					<option value="Appartements">Appartements</option>
-					<option value="Hotels & restaurants">Hotels & restaurants </option>
-					<option value="Objets">Objets</option>
-				</select>
-	
 				<div class="HR"></div>
-	
-	
-				<input type="submit" id="submitWork" value="Valider"></button>
-	
-			</form>
-		</div>
-	</aside> -->
+
+				<button class="lastBtnInModal" id="btnAddPhoto">Ajouter une photo</button>
+
+			</div>
+		</aside>
+
+		<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
+			aria-labelledby="titleModal" style="display: none;">
+
+			<div class="modal-wrapper">
+
+				<button id="crossForclose2" class="closeModal"><i class="fa-solid fa-xmark"></i></button>
+
+				<h3 class="titleModal">Ajout photo</h3>
+
+				<div class="container-add-photo">
+					<i id="iconPicture" class="fa-regular fa-image"></i>
+				</div>
+
+				<form action="" class="form-addWork">
+					<div class="labelAndInputFile" >
+					<label for="photoWork" class="labelBtnFile"> <span id="falseBtn">+ Ajouter photo</span> jpg, png: 4Mo max </label>
+					<input type="file" name="photoWork" id="photoWork">
+					</div>
+					<label id="labelText" class="labelTypesTextAndSelect" for="titleWork">Titre</label>
+					<input type="text" name="titleWork" id="titleWork">
+
+					<label class="labelTypesTextAndSelect" for="category">Catégorie</label>
+					<select name="category" id="category">
+						<option value="Appartements">Appartements</option>
+						<option value="Hotels & restaurants">Hotels & restaurants </option>
+						<option value="Objets">Objets</option>
+					</select>
+
+					<div id="divHRmodal2" class="HR"></div>
+
+					<input type="submit" id="submitWork" value="Valider"></button>
+
+				</form>
+
+			</div>
+		</aside>
 
 
-
+	</main>
 
 	<footer>
 		<nav>

@@ -365,9 +365,6 @@ main {
 
 
 
-
-
-
 /*///////// MODAL    ///////////////////////*/
 
 
@@ -378,7 +375,7 @@ main {
 	background-color: white;
 	position: relative;
 	bottom: 3050px;
-	width: 66%;
+	width: 63%;
 	height: 780px;
 	margin: auto;
 	border-radius: 25px;
@@ -388,7 +385,6 @@ main {
 .modal-wrapper {
 	padding-top: 80px;
 	text-align: center;
-	
 }
 
 .titleModal {
@@ -396,7 +392,6 @@ main {
 }
 
 .closeModal {
-
 	border: none;
 	background-color: transparent;
 	position: absolute;
@@ -422,14 +417,7 @@ main {
 }
 
 
-
-
-
-
-/** Modal "Galerie photo**/
-
-
-
+/****Modal 1 photos gallery****/
 
 .titleModal {
 	margin-bottom: 50px;
@@ -441,9 +429,7 @@ main {
 	width: 70%;
 	margin: auto;
 	gap: -10px;
-	
 }
-
 
 .galleryPhoto figure {
 	width:fit-content;
@@ -453,7 +439,6 @@ main {
 	height: 130px;
 	margin-bottom: 25px;
 }
-
 
 .bttnDeleteWork {
 	position: relative;
@@ -465,10 +450,7 @@ main {
 	font-size: 80%;
 }
 
-
-
-
-#addPhoto {
+#btnAddPhoto {
 	margin-top: 35px;
 	font-family: 'Syne';
 	font-size: 14px;
@@ -480,54 +462,115 @@ main {
 	border: solid 1px #1D6154;
 }
 
-
-
-
-
-
-#addPhoto:hover {
+#btnAddPhoto:hover {
 	cursor: pointer;
 }
 
 
+/**** Modal2 "Add Work****/
 
-
-
-/** Modal "Ajout photo**/
-
-
-.form-addWork {
-	width: 30%;
+.container-add-photo{
+	background-color: #E8F1F6;
+	width: 65%;
+	height: 180px;
 	margin: auto;
-	display: flex;
-	flex-direction: column;
-	gap: 15px;
+}
+
+#iconPicture {
+	font-size: 500%;
+	padding-top: 15px;
+	color: #B9C5CC;
 }
 
 
+#photoWork{
+	display: none;
+}
+
+
+.labelAndInputFile {
+position: relative;
+bottom: 50px;
+width: 50%;
+margin: auto;
+}
+
+
+.labelBtnFile {
+	font-size: 10px;
+	display: block;
+	color: #444444;
+}
+
+#falseBtn {
+	cursor: pointer;
+	margin-top: 35px;
+	color: #306685;
+	background-color: #CBD6DC;
+	height: 28px;
+	padding-top: 12px;
+	border-radius: 60px;
+	border: solid 1px #CBD6DC;
+	display: block;
+	margin-bottom: 5px;
+	font-size: 16px;
+}
+
+
+
+
+.form-addWork {
+	width: 65%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	position: relative;
+	bottom: 70px;
+}
+
+
+
+
+
+
+.labelTypesTextAndSelect {
+	color: #3D3D3D;
+	font-size: 14px;
+	padding-right: 86%;
+}
+
+#labelText {
+	position: relative;
+	right: 3.5%;
+}
+
 #titleWork {
-	height: 38px;
+	height: 51px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	border: solid 1px white;
 }
 
-
 #category {
-	height: 42px;
+	height: 51px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	border: solid 1px white;
 	background-color: white;
 	border-right: 30px;
 }
 
-
 #submitWork {
 	width: 200px;
 	height: 40px;
 	background-color: #A7A7A7;
-
+	border: 1px solid #A7A7A7 ;
 }
 
+
+#divHRmodal2 {
+width: 100%;
+color: #B3B3B3;
+}
 
 /*/////////////////////////////////////////**/
 
