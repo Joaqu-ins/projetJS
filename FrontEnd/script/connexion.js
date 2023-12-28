@@ -1,5 +1,7 @@
 
 
+
+
 // Get the snackbars div
 const snack401 = document.getElementById("snackbar401");
 const snack404 = document.getElementById("snackbar404");
@@ -72,6 +74,10 @@ formLogin.addEventListener("submit", function (event) {
 
       // Redirection vers la page d'accueil
       window.location.href='http://127.0.0.1:5500/FrontEnd/index.html'
+
+      const btnChangeWork= document.getElementById("btn-change-Work");
+      btnChangeWork.style.display="block"; 
+
     })
 
     // Affichage de l'erreur si promesse rejetée
