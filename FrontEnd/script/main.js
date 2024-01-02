@@ -174,6 +174,8 @@ recoveryWorks.then(() => { // When promise is resolved:
     const modal2 = document.getElementById("modal2");
     const bttnChangeWorks = document.getElementById("btn-change-Work")
     const crossForClose = document.querySelector(".closeModal")
+    const crossModal2 = document.getElementById("crossForclose2");
+
 
 
     // function for close one modal to specify
@@ -188,7 +190,7 @@ recoveryWorks.then(() => { // When promise is resolved:
 
     // function for closes all modals    
     const closeModal = function (e) {
-        
+
         e.removeAttribute('aria-modal');
         e.setAttribute('aria-hidden', true);
         e.style.display = "none";
@@ -203,12 +205,15 @@ recoveryWorks.then(() => { // When promise is resolved:
     //////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
     // Menaging modal2 (addPhoto) ///////////////////////////////////////////////////////////
     const btnAddPhoto = document.getElementById('btnAddPhoto');
     const crossForclose2 = document.getElementById("crossForclose2");
 
     btnAddPhoto.addEventListener("click", () => {
         openModal(modal2);
+        crossModal2.focus();
         closeModal(modal1);
         html.style.backgroundColor = "#0000004D";
     });
@@ -216,76 +221,64 @@ recoveryWorks.then(() => { // When promise is resolved:
     crossForclose2.addEventListener("click", () => {
         closeModal(modal2);
     });
-////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
+    // Tabulations rules and Escape Rules for Modals /////////////////////////////////////////////////////////////////////
 
+    //for modal1
+    let focusablesElementsM1 = [];
+    const elementsInModal1 = Array.from(modal1.querySelectorAll("aside button"));
 
+    //for modal2
+    let focusablesElementsM2 = [];
+    const inputHidden = document.getElementById("photoWork");
+    const falseBtn = document.getElementById("falseBtn");
+    const elementsInModal2 = Array.from(modal2.querySelectorAll("aside button, input[type=file], input[type=text], select, input[type=submit]"));
 
+    // function for all modals
+    function TabEscRules(modalX, elemInModalX, focusablesElementsX) {
 
+        modalX.addEventListener("keydown", function (e) {
 
+            if (e.key === "Tab") {
+                e.preventDefault();
 
+                //Building an array including all buttons in the modal
+                focusablesElementsX = []
+                focusablesElementsX.push(...elemInModalX);
+                //searching the index of the button focused
+                let index = focusablesElementsX.indexOf(modalX.querySelector(':focus'));
 
+                if (e.shiftKey === true) { index--; }
+                else { index++; }
 
+                if (index < 0) { index = focusablesElementsX.length - 1; }
+                if (index >= focusablesElementsX.length) { index = 0; }
 
-
-
-
-
-
-
-
-    // Allow the closing of the modal and menaging tabulation rules //////////////////////////////////////////////////////
-    let focusablesElements = [];
-    modal.addEventListener("keydown", function (e) {
-
-        if (e.key === "Tab") {
-            e.preventDefault();
+                //we put the focus on the indexed button
+                focusablesElementsX[index].focus();
+            }
 
             //closing part
             if (e.key === "Escape" || e.key === "Esc") {
-                closeModal(modal);
+                closeModal(modalX);
             }
 
-            //Building an array including all buttons in the modal
-            const bttnsInModal = Array.from(modal.querySelectorAll("aside button"));
-            focusablesElements.push(...bttnsInModal);
-            //searching the index of the button focused
-            let index = focusablesElements.indexOf(modal.querySelector(':focus'));
+            if (document.activeElement === inputHidden) { falseBtn.style.outline = "2px solid blue" }
+            else { falseBtn.style.outline = "none" }
 
-            if (e.shiftKey === true) { index--; }
-            else { index++; }
+        });
+    }
 
-            if (index < 0) { index = focusablesElements.length - 1; }
-            if (index >= focusablesElements.length) { index = 0; }
+    // Calling function for modal1
+    TabEscRules(modal1, elementsInModal1, focusablesElementsM1);
+    // Calling function for modal2
+    TabEscRules(modal2, elementsInModal2, focusablesElementsM2);
 
-            //we put the focus on the indexed button
-            focusablesElements[index].focus();
-        }
-
-        else { return; }
-    });
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

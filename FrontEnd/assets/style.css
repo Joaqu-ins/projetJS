@@ -3,6 +3,7 @@
    License: none (public domain)
 */
 
+
 html,
 body,
 div,
@@ -480,11 +481,6 @@ main {
 	font-size: 500%;
 	padding-top: 15px;
 	color: #B9C5CC;
-}
-
-
-#photoWork{
-	display: none;
 }
 
 
