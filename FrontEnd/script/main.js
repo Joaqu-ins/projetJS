@@ -1,13 +1,34 @@
-
 // Variables
 let toReturn;
 let titleS;
 let figureS;
 
+ // Targeting buttons from home page
+ const buttonTOUS = document.querySelector(".bttnTous");
+ const buttonObjet = document.querySelector(".bttnObjets");
+ const buttonApparts = document.querySelector(".bttnApparts");
+ const buttonHR = document.querySelector(".bttnHR");
 
-/** Function: recovery works of architect (auto-invoquée)**/
+ // Targeting elements in DOM for manage modals
+ const html = document.querySelector(".html");
+ const modal1 = document.getElementById("modal1");
+ const modal2 = document.getElementById("modal2");
+ const bttnChangeWorks = document.getElementById("btn-change-Work")
+ const crossForClose = document.querySelector(".closeModal")
+ const crossModal2 = document.getElementById("crossForclose2");
+
+
+ // Display button "btnChangeWork" if "token" and "id" are saved ////////////////////////////////////////
+ const testUserId = window.localStorage.getItem("userId");
+ const testToken = window.localStorage.getItem("token");
+ const btnChangeWork = document.getElementById("btn-change-Work");
+ if (testToken && testUserId !== null) { btnChangeWork.style.display = "block" }
+ 
+
+
+
+/** Function: recovery works of architect (self-initiated)**/////////////////////////////////////////////
 let recoveryWorks = (async function fetchWorks() {
-
     try {
         const response = await fetch('http://localhost:5678/api/works');
         const data = await response.json();
@@ -24,36 +45,31 @@ let recoveryWorks = (async function fetchWorks() {
     catch (error) { alert(error) }
 
     finally { return toReturn }
-})();
+})();////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 
 recoveryWorks.then(() => { // When promise is resolved:
 
 
-    // Targeting
-    const buttonTOUS = document.querySelector(".bttnTous")
-    const buttonObjet = document.querySelector(".bttnObjets")
-    const buttonApparts = document.querySelector(".bttnApparts")
-    const buttonHR = document.querySelector(".bttnHR")
-
-
     // Code made for create "figure element in DOM" accoording to the number of works in response/////
     let imageS = toReturn.map(dataWorks => dataWorks.imageUrl);
-    const portfolio= document.querySelector(".gallery")
+    const portfolio = document.querySelector(".gallery")
 
-    for (let i=0; i<imageS.length; i++) {
+    for (let i = 0; i < imageS.length; i++) {
 
-        const createWork= document.createElement("figure");
+        const createWork = document.createElement("figure");
         createWork.classList.add("work");
         portfolio.appendChild(createWork);
-        }
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-       
+    }
+    
 
 
-// Function for display all the works ////////////////////////////////////////////////////////////////
+
+
+    // Function for display all the works ///////////////////////////////////////////////////////////////
     function displayAllWorks() {
 
         // Code to reach titles of all works
@@ -72,16 +88,16 @@ recoveryWorks.then(() => { // When promise is resolved:
             figureS[i].appendChild(figcaption);
         }
     };
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  // Displaying all the works on home page
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Displaying all the works on home page
     displayAllWorks();
-    
 
-  
-  
-    // Function for buttons /////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+    // Function for buttons in home page //////////////////////////////////////////////////////////////////
     function filterCategory(button, category) {
 
         button.addEventListener("click", () => {
@@ -117,6 +133,10 @@ recoveryWorks.then(() => { // When promise is resolved:
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
+    // Calling function for all buttons from home page/////////////////////////////////////////////////////
     // Maneging "Tous" button
     buttonTOUS.addEventListener("click", () => {
         // delete all the works allready displayed
@@ -135,10 +155,14 @@ recoveryWorks.then(() => { // When promise is resolved:
 
     // Menaging "Appartements and restaurants" button
     filterCategory(buttonHR, "Hotels & restaurants");
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-    //Loop for display works in modal1 //////////////////////////////////////////////////////////////////////////////
+
+
+
+    //Code for display works in modal1 ///////////////////////////////////////////////////////////////////////
     const galleryPhoto = document.querySelector(".galleryPhoto");
 
     for (let i = 0; i < toReturn.length; i++) {
@@ -161,10 +185,15 @@ recoveryWorks.then(() => { // When promise is resolved:
         image.src = toReturn[i].imageUrl;
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
-
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+
+    // Code for delete work in modal1////////////////////////////////////////////////////////////////////////
     const getToken = window.localStorage.getItem("token");
     const AllBtnDelete = document.querySelectorAll(".bttnDeleteWork");
     const myHeaders = {
@@ -173,43 +202,105 @@ recoveryWorks.then(() => { // When promise is resolved:
     };
 
     AllBtnDelete.forEach((element) =>
-
         element.addEventListener("click", (e) => {
             fetch(`http://localhost:5678/api/works/${element.id}`, {
                 method: "DELETE",
                 headers: myHeaders,
             });
         }));
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+    // Displaying preview of picture selected in "input type=file" for modal2 ////////////////////////////////
+    const containerAddPhoto = document.querySelector(".container-add-photo");
+    const preview = document.createElement("img");
+    const fileInput = document.getElementById("photoWork");
+    const iconPicture = document.getElementById("iconPicture");
+    const formAddWork = document.querySelector(".form-addWork");
+    const labelBtnFile = document.querySelector(".labelBtnFile");
+
+    function handleFileChange() {
+
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.addEventListener("load", () => {
+                // convert picture in base64 character string 
+                preview.src = reader.result;
+                containerAddPhoto.appendChild(preview);
+            });
+
+            // we demand to read string character as an URL
+            reader.readAsDataURL(file);
+
+            // managing the style of elements in modal2
+            preview.style.width = "30%";
+            preview.style.height = "inherit";
+            iconPicture.style.display = "none";
+            falseBtn.style.display = "none";
+            formAddWork.style.paddingTop = "92px";
+            labelBtnFile.style.display = "none";
+        }
+    }
+    fileInput.addEventListener("change", handleFileChange);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+     // Deleting picture in preview inside modal2/////////////////////////////////////////////////////////////
+     const submitWork = document.getElementById("submitWork");
+
+     function deletePreview() {
+         preview.remove();
+     }
+ 
+     crossModal2.addEventListener("click", deletePreview);
+     submitWork.addEventListener("click", deletePreview);
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      
 
-
-
-
-
-
-
-
-
-    // Display button "btnChangeWork" if "token" and "id" are saved ////////////////////////////////////////////////
-    const testUserId = window.localStorage.getItem("userId");
-    const testToken = window.localStorage.getItem("token");
-    const btnChangeWork = document.getElementById("btn-change-Work");
-
-    if (testToken && testUserId !== null) { btnChangeWork.style.display = "block" }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    const html = document.querySelector(".html");
-    const modal1 = document.getElementById("modal1");
-    const modal2 = document.getElementById("modal2");
-    const bttnChangeWorks = document.getElementById("btn-change-Work")
-    const crossForClose = document.querySelector(".closeModal")
-    const crossModal2 = document.getElementById("crossForclose2");
-
-
-
-    // function for close one modal to specify
+    // function for close or open modal ////////////////////////////////////////////////////////////////////////
     const openModal = function (e) {
 
         e.removeAttribute('aria-hidden');
@@ -228,23 +319,23 @@ recoveryWorks.then(() => { // When promise is resolved:
         html.style.backgroundColor = "#FFFEF8";
     };
 
-    // Menaging modal1 (displaying all works for delete) ////////////////////////////////////
-    // Oppening
+    // Calling function for manage opening and closing of modal1 
     bttnChangeWorks.addEventListener("click", () => openModal(modal1));
-    // Closing
     crossForClose.addEventListener("click", () => closeModal(modal1));
-    //////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-    // Menaging modal2 (addPhoto) ///////////////////////////////////////////////////////////
+   
+    // Calling function for manage opening and closing of modal2
     const btnAddPhoto = document.getElementById('btnAddPhoto');
     const crossForclose2 = document.getElementById("crossForclose2");
 
     btnAddPhoto.addEventListener("click", () => {
         openModal(modal2);
         crossModal2.focus();
+        // Managing the style of elements in modal2 according to the code displaying preview of "input type=file"
+        iconPicture.style.display = "block";
+        falseBtn.style.display = "block";
+        formAddWork.style.paddingTop = "0px";
+        labelBtnFile.style.display = "block";
+
         closeModal(modal1);
         html.style.backgroundColor = "#0000004D";
     });
@@ -252,7 +343,24 @@ recoveryWorks.then(() => { // When promise is resolved:
     crossForclose2.addEventListener("click", () => {
         closeModal(modal2);
     });
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -310,6 +418,30 @@ recoveryWorks.then(() => { // When promise is resolved:
     TabEscRules(modal2, elementsInModal2, focusablesElementsM2);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
 
 
 
