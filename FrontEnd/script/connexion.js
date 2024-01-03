@@ -65,13 +65,6 @@ formLogin.addEventListener("submit", function (event) {
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("token", token);
 
-      // Test de la sauvegarde
-      const testUserId = window.localStorage.getItem("userId");
-      console.log("Test UserId from localStorage:", testUserId);
-
-      const testToken = window.localStorage.getItem("token");
-      console.log("Test UserId from localStorage:", testToken);
-
       // Redirection vers la page d'accueil
       window.location.href='http://127.0.0.1:5500/FrontEnd/index.html'
 

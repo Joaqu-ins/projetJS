@@ -2,8 +2,7 @@
 // Variables
 let toReturn;
 let titleS;
-let imageS;
-
+let figureS;
 
 
 /** Function: recovery works of architect (auto-invoquée)**/
@@ -29,30 +28,37 @@ let recoveryWorks = (async function fetchWorks() {
 
 
 
-
-
 recoveryWorks.then(() => { // When promise is resolved:
 
 
     // Targeting
-    let figureS = document.querySelectorAll(".work");
     const buttonTOUS = document.querySelector(".bttnTous")
     const buttonObjet = document.querySelector(".bttnObjets")
     const buttonApparts = document.querySelector(".bttnApparts")
     const buttonHR = document.querySelector(".bttnHR")
 
 
+    // Code made for create "figure element in DOM" accoording to the number of works in response/////
+    let imageS = toReturn.map(dataWorks => dataWorks.imageUrl);
+    const portfolio= document.querySelector(".gallery")
+
+    for (let i=0; i<imageS.length; i++) {
+
+        const createWork= document.createElement("figure");
+        createWork.classList.add("work");
+        portfolio.appendChild(createWork);
+        }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+       
 
 
-    // Function for display all the works //////////////////////////////////////////////////////////////
+// Function for display all the works ////////////////////////////////////////////////////////////////
     function displayAllWorks() {
-
-        // Code to reach pictures of all works
-        imageS = toReturn.map(dataWorks => dataWorks.imageUrl)
 
         // Code to reach titles of all works
         titleS = toReturn.map(dataWorks => dataWorks.title)
-
+        figureS = document.querySelectorAll(".work");
         // For each figure
         for (let i = 0; i < figureS.length; i++) {
 
@@ -66,13 +72,15 @@ recoveryWorks.then(() => { // When promise is resolved:
             figureS[i].appendChild(figcaption);
         }
     };
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    // Displaying all the works on home page
+  // Displaying all the works on home page
     displayAllWorks();
+    
 
-
+  
+  
     // Function for buttons /////////////////////////////////////////////////////////////////////////////
     function filterCategory(button, category) {
 
@@ -132,6 +140,7 @@ recoveryWorks.then(() => { // When promise is resolved:
 
     //Loop for display works in modal1 //////////////////////////////////////////////////////////////////////////////
     const galleryPhoto = document.querySelector(".galleryPhoto");
+
     for (let i = 0; i < toReturn.length; i++) {
 
         //adding button containing icon delete
@@ -156,6 +165,29 @@ recoveryWorks.then(() => { // When promise is resolved:
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    const getToken = window.localStorage.getItem("token");
+    const AllBtnDelete = document.querySelectorAll(".bttnDeleteWork");
+    const myHeaders = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken}`
+    };
+
+    AllBtnDelete.forEach((element) =>
+
+        element.addEventListener("click", (e) => {
+            fetch(`http://localhost:5678/api/works/${element.id}`, {
+                method: "DELETE",
+                headers: myHeaders,
+            });
+        }));
+
+     
+
+
+
+
+
+
 
 
 
@@ -169,7 +201,6 @@ recoveryWorks.then(() => { // When promise is resolved:
 
 
     const html = document.querySelector(".html");
-    const modal = document.querySelector(".modal")
     const modal1 = document.getElementById("modal1");
     const modal2 = document.getElementById("modal2");
     const bttnChangeWorks = document.getElementById("btn-change-Work")
@@ -278,7 +309,7 @@ recoveryWorks.then(() => { // When promise is resolved:
     // Calling function for modal2
     TabEscRules(modal2, elementsInModal2, focusablesElementsM2);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
