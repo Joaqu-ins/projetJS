@@ -80,6 +80,7 @@ function displayWorksModal1() {
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
     })
+
 };
 
 

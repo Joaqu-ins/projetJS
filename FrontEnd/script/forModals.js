@@ -76,15 +76,18 @@ export function previewPicModal2() {
             // we get extension of the file loaded
             let fileName= fileInput.value;
             let extension = fileName.split('.').pop();
-            
-               // If extension is not correct
-                if (extension != "png" && extension != "jpg"){
+            let size= (fileInput.files[0].size)/1024;
+
+               // If the extension of the is not correct
+                if (extension != "png" && extension != "jpg" || size>4000){
                     const snackFormat= document.getElementById("snack-format")
                             snackbar(snackFormat);
                             fileInput.value="";
                    // we stop the rest of the function
                     return;
                 }
+
+
             // we demand to read string character as an URL
             reader.readAsDataURL(file);
             // managing the style of elements in modal2

@@ -8,7 +8,7 @@
 	position: relative;
 	bottom: 2600px;
 	width: 63%;
-	height: 700px;
+	min-height: 700px;
 	margin: auto;
 	border-radius: 25px;
 	padding-bottom: 50px;
