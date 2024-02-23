@@ -1,43 +1,45 @@
+const snack401 = document.getElementById("snack401");
+const snack404 = document.getElementById("snack404");
+const snackEmail = document.getElementById("snackEmail");
+const snackPassW = document.getElementById("snackPassW")
+const aLogout = document.getElementById("a-logout");
+const navAlogin = document.getElementById("nav-a-login");
+const formLogin = document.querySelector(".form-login")
+
+// putting in bold the link "login"
+navAlogin.style.fontWeight = "bold";
 
 
-
-
-// Get the snackbars div
-const snack401 = document.getElementById("snackbar401");
-const snack404 = document.getElementById("snackbar404");
-
-
-// Function Snackbar////////////////////////////////////////////////////////////////////
 function snackbar(x) {
- 
+  // Get the snackbar DIV
+
   // Add the "show" class to DIV
   x.className = "show";
 
   // After 3 seconds, remove the show class from DIV
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-} 
-/////////////////////////////////////////////////////////////////////////////////////////
+  setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
 
 
+// Managing login form
 
 
-// Gestion du formulaire login///////////////////////////////////////////////////////////
-
-const formLogin = document.querySelector(".form-login")
-formLogin.addEventListener("submit", function (event) {
+formLogin.addEventListener("submit", function (event) {///////////////////////////////////
   event.preventDefault();
 
-  // récupération des valeurs saisies dans input du form
+  if (document.querySelector("[name=email]").value === "") { snackbar(snackEmail) };
+  if (document.querySelector("[name=password]").value === "") { snackbar(snackPassW) };
+
   const login = {
     email: event.target.querySelector("[name=email]").value,
     password: event.target.querySelector("[name=password]").value
   };
 
-  // création de la charge utile
+  // making payload
   const payLoad = JSON.stringify(login);
 
 
-  // envoi de la requête
+  // sending request
   fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -57,43 +59,32 @@ formLogin.addEventListener("submit", function (event) {
 
     .then(data => {
 
-      // Récupération des données
       const userId = data.userId;
       const token = data.token;
 
-      // Sauvegarde dans le localStorage
       window.localStorage.setItem("userId", userId);
       window.localStorage.setItem("token", token);
 
-      // Redirection vers la page d'accueil
-      window.location.href='http://127.0.0.1:5500/FrontEnd/index.html'
+      window.location.href = 'http://127.0.0.1:5500/index.html'
 
-      const btnChangeWork= document.getElementById("btn-change-Work");
-      btnChangeWork.style.display="block"; 
+      const btnChangeWork = document.getElementById("btn-change-Work");
+      btnChangeWork.style.display = "block";
 
     })
 
-    // Affichage de l'erreur si promesse rejetée
+    // Display the error message
     .catch((response) => {
-      
+
       // Appel fonction snackbar 401
-      if(response.status === 401)
-      {snackbar(snack401)}
+      if (response.status === 401) { snackbar(snack401) };
 
       // Appel fonction snackbar 404
-      if(response.status = 404)
-      {snackbar(snack404)};
-      
+      if (response.status = 404) { snackbar(snack404) };
+
     });
 
 
 
-
-
-
-
-
-
-});//////////////////////////////////////////////////////////////////////////////////////////
+});///////////////////////////////////////////////////////////////////////////////////
 
 

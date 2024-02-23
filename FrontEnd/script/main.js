@@ -1,173 +1,69 @@
-// Variables
-let toReturn;
-let titleS;
-let figureS;
+// Importing functions
+import { WorkDataService } from "./callAPI.js";
+import { TabEscRules } from "./forModals.js";
+import { previewPicModal2 } from "./forModals.js";
+import { removeEltsInModal2 } from "./forModals.js";
+import { sendWork } from "./callAPI.js";
+import { classAPIdelete } from "./callAPI.js";
 
- // Targeting buttons from home page
- const buttonTOUS = document.querySelector(".bttnTous");
- const buttonObjet = document.querySelector(".bttnObjets");
- const buttonApparts = document.querySelector(".bttnApparts");
- const buttonHR = document.querySelector(".bttnHR");
-
- // Targeting elements in DOM for manage modals
- const html = document.querySelector(".html");
- const modal1 = document.getElementById("modal1");
- const modal2 = document.getElementById("modal2");
- const bttnChangeWorks = document.getElementById("btn-change-Work")
- const crossForClose = document.querySelector(".closeModal")
- const crossModal2 = document.getElementById("crossForclose2");
+// Importing variables
+import { preview } from "./forModals.js";
 
 
- // Display button "btnChangeWork" if "token" and "id" are saved ////////////////////////////////////////
- const testUserId = window.localStorage.getItem("userId");
- const testToken = window.localStorage.getItem("token");
- const btnChangeWork = document.getElementById("btn-change-Work");
- if (testToken && testUserId !== null) { btnChangeWork.style.display = "block" }
- 
+// Functions
+
+function displayAllWorks() {
+    worksGlobalVariable.forEach((work) => {
+        const imageElement = document.createElement("img");
+        imageElement.src = work.imageUrl
+
+        const figcaptionElement = document.createElement("figcaption");
+        figcaptionElement.textContent = work.title;
+
+        const createWorkElement = document.createElement("figure");
+        createWorkElement.setAttribute('id', 'work-' + work.id)
+        createWorkElement.classList.add("work");
+        createWorkElement.append(imageElement)
+        createWorkElement.append(figcaptionElement)
+        containerWorks.append(createWorkElement)
+    })
+};
 
 
-
-/** Function: recovery works of architect (self-initiated)**/////////////////////////////////////////////
-let recoveryWorks = (async function fetchWorks() {
-    try {
-        const response = await fetch('http://localhost:5678/api/works');
-        const data = await response.json();
-
-        /** Throw error if response is not ok**/
-        if (!response.ok) {
-            throw new Error(`${response.status} ${response.statusText}`)
-        }
-        // if response ok
-        else { toReturn = data }
-        console.log(toReturn);
-    }
-    /*Error caught*/
-    catch (error) { alert(error) }
-
-    finally { return toReturn }
-})();////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-recoveryWorks.then(() => { // When promise is resolved:
-
-
-    // Code made for create "figure element in DOM" accoording to the number of works in response/////
-    let imageS = toReturn.map(dataWorks => dataWorks.imageUrl);
-    const portfolio = document.querySelector(".gallery")
-
-    for (let i = 0; i < imageS.length; i++) {
-
-        const createWork = document.createElement("figure");
-        createWork.classList.add("work");
-        portfolio.appendChild(createWork);
-    }
-    
-
-
-
-
-    // Function for display all the works ///////////////////////////////////////////////////////////////
-    function displayAllWorks() {
-
-        // Code to reach titles of all works
-        titleS = toReturn.map(dataWorks => dataWorks.title)
-        figureS = document.querySelectorAll(".work");
-        // For each figure
-        for (let i = 0; i < figureS.length; i++) {
-
-            //create img, 
-            let image = document.createElement("img");
-            image.src = imageS[i];
-            figureS[i].appendChild(image);
-            //for titles
-            let figcaption = document.createElement("figcaption");
-            figcaption.textContent = titleS[i];
-            figureS[i].appendChild(figcaption);
-        }
-    };
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Displaying all the works on home page
-    displayAllWorks();
-
-
-
-
-
-
-    // Function for buttons in home page //////////////////////////////////////////////////////////////////
-    function filterCategory(button, category) {
-
-        button.addEventListener("click", () => {
-
-            // bloc pour filter les travaux par catégorie objets
-            const filtreByName = toReturn.filter(function (work) {
-                return work.category.name === category;
-            })
-
-            // we extract titles and images for array filtreByName
-            let imgWorks = filtreByName.map(dataWork => dataWork.imageUrl)
-            let titleWorks = filtreByName.map(dataWork => dataWork.title)
-
-            // we delete the display of each work
-            figureS.forEach(figure => {
-                figure.innerHTML = "";
-            });
-
-            for (let i = 0; i < figureS.length; i++) {
-                //creating img, joinning an url and adding in DOM
-                let image = document.createElement("img");
-                image.src = imgWorks[i];
-                figureS[i].appendChild(image);
-
-                let figcaption = document.createElement("figcaption");
-                figcaption.textContent = titleWorks[i];
-                figureS[i].appendChild(figcaption);
-
-                if (i === filtreByName.length - 1) { break };
-            };
+function filterByCategory(button, category) {
+    button.addEventListener("click", () => {
+        // bloc pour filter les travaux par catégorie objets
+        const worksFiltered = worksGlobalVariable.filter(function (work) {
+            return work.category.name === category;
         });
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        const works = Array.from(containerWorks.getElementsByClassName('work'))
+        works.forEach(work => {
+            work.classList.add('hidden')
+        });
+        worksFiltered.forEach(workFiltered => {
+            const workElement = document.getElementById('work-' + workFiltered.id)
+            workElement.classList.remove('hidden')
+        });
+    })
+};
 
 
-
-
-
-    // Calling function for all buttons from home page/////////////////////////////////////////////////////
-    // Maneging "Tous" button
+function buttonsHomePage() {
     buttonTOUS.addEventListener("click", () => {
-        // delete all the works allready displayed
-        figureS.forEach(figure => {
-            figure.innerHTML = "";
+        const works = Array.from(containerWorks.getElementsByClassName('work'))
+        works.forEach(work => {
+            work.classList.remove('hidden')
         });
-        // Function for display all the works
-        displayAllWorks();
     });
-
-    //Menaging "Objects" button
-    filterCategory(buttonObjet, "Objets");
-
-    // Menaging "Appartements" button
-    filterCategory(buttonApparts, "Appartements");
-
-    // Menaging "Appartements and restaurants" button
-    filterCategory(buttonHR, "Hotels & restaurants");
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    filterByCategory(buttonObjet, "Objets");
+    filterByCategory(buttonApparts, "Appartements");
+    filterByCategory(buttonHR, "Hotels & restaurants");
+}
 
 
+function displayWorksModal1() {
+    worksGlobalVariable.forEach(work => {
 
-
-
-
-    //Code for display works in modal1 ///////////////////////////////////////////////////////////////////////
-    const galleryPhoto = document.querySelector(".galleryPhoto");
-
-    for (let i = 0; i < toReturn.length; i++) {
-
-        //adding button containing icon delete
         const figureGallery = document.createElement("figure");
         const bttnDelete = document.createElement("button");
         bttnDelete.className = "bttnDeleteWork";
@@ -176,250 +72,135 @@ recoveryWorks.then(() => { // When promise is resolved:
         bttnDelete.appendChild(iconDelete);
         figureGallery.appendChild(bttnDelete);
 
-        //allocation id of work to the button
-        let idWork = toReturn[i].id;
+        let idWork = work.id;
         bttnDelete.setAttribute('id', idWork);
 
-        // displaying Work's image 
         const image = document.createElement("img");
-        image.src = toReturn[i].imageUrl;
+        image.src = work.imageUrl;
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    })
+};
 
 
+const openModal = function (e) {
+
+    e.setAttribute('aria-hidden', false);
+    e.setAttribute('aria-modal', true);
+    e.style.display = "block";
+    html.style.backgroundColor = "#0000004D";
+    crossForClose1.focus();
+};
 
 
+const closeModal = function (e) {
+
+    e.removeAttribute('aria-modal');
+    e.setAttribute('aria-hidden', true);
+    e.style.display = "none";
+    html.style.backgroundColor = "#FFFEF8";
+    fileInput.value = "";
+    titleWork.value = "";
+    // we make the button submitWork no functional
+    submitWork.disabled = true;
+};
 
 
-    // Code for delete work in modal1////////////////////////////////////////////////////////////////////////
-    const getToken = window.localStorage.getItem("token");
-    const AllBtnDelete = document.querySelectorAll(".bttnDeleteWork");
-    const myHeaders = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getToken}`
-    };
-
-    AllBtnDelete.forEach((element) =>
-        element.addEventListener("click", (e) => {
-            fetch(`http://localhost:5678/api/works/${element.id}`, {
-                method: "DELETE",
-                headers: myHeaders,
-            });
-        }));
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-    // Displaying preview of picture selected in "input type=file" for modal2 ////////////////////////////////
-    const containerAddPhoto = document.querySelector(".container-add-photo");
-    const preview = document.createElement("img");
-    const fileInput = document.getElementById("photoWork");
-    const iconPicture = document.getElementById("iconPicture");
-    const formAddWork = document.querySelector(".form-addWork");
-    const labelBtnFile = document.querySelector(".labelBtnFile");
-
-    function handleFileChange() {
-
-        const file = fileInput.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.addEventListener("load", () => {
-                // convert picture in base64 character string 
-                preview.src = reader.result;
-                containerAddPhoto.appendChild(preview);
-            });
-
-            // we demand to read string character as an URL
-            reader.readAsDataURL(file);
-
-            // managing the style of elements in modal2
-            preview.style.width = "30%";
-            preview.style.height = "inherit";
-            iconPicture.style.display = "none";
-            falseBtn.style.display = "none";
-            formAddWork.style.paddingTop = "92px";
-            labelBtnFile.style.display = "none";
-        }
-    }
-    fileInput.addEventListener("change", handleFileChange);
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-     // Deleting picture in preview inside modal2/////////////////////////////////////////////////////////////
-     const submitWork = document.getElementById("submitWork");
-
-     function deletePreview() {
-         preview.remove();
-     }
- 
-     crossModal2.addEventListener("click", deletePreview);
-     submitWork.addEventListener("click", deletePreview);
-     //////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
-    // function for close or open modal ////////////////////////////////////////////////////////////////////////
-    const openModal = function (e) {
-
-        e.removeAttribute('aria-hidden');
-        e.setAttribute('aria-modal', true);
-        e.style.display = "block";
-        html.style.backgroundColor = "#0000004D";
-        crossForClose.focus();
-    };
-
-    // function for closes all modals    
-    const closeModal = function (e) {
-
-        e.removeAttribute('aria-modal');
-        e.setAttribute('aria-hidden', true);
-        e.style.display = "none";
-        html.style.backgroundColor = "#FFFEF8";
-    };
-
-    // Calling function for manage opening and closing of modal1 
-    bttnChangeWorks.addEventListener("click", () => openModal(modal1));
-    crossForClose.addEventListener("click", () => closeModal(modal1));
-   
-    // Calling function for manage opening and closing of modal2
-    const btnAddPhoto = document.getElementById('btnAddPhoto');
-    const crossForclose2 = document.getElementById("crossForclose2");
+// Here we open modal 2
+function WhenClickOnBtnAddPhoto() {
 
     btnAddPhoto.addEventListener("click", () => {
+        //stop the automatic scroll according axe Y when we open modal2
+        const scrollPosition = window.scrollY;
         openModal(modal2);
-        crossModal2.focus();
+        window.scrollTo(0, scrollPosition);
         // Managing the style of elements in modal2 according to the code displaying preview of "input type=file"
         iconPicture.style.display = "block";
         falseBtn.style.display = "block";
         formAddWork.style.paddingTop = "0px";
         labelBtnFile.style.display = "block";
-
         closeModal(modal1);
         html.style.backgroundColor = "#0000004D";
     });
+}
 
-    crossForclose2.addEventListener("click", () => {
+
+function WhenClickOnSubtmitWork() {
+    submitWork.addEventListener("click", function (e) {
+        e.preventDefault();
+        sendWork();
         closeModal(modal2);
-    });
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    })
+};
 
 
+// When we click on the arrow in the modals for turn back
+function whenClickOnArrow() {
+    arrowReturn.addEventListener("click", () => {
+        preview.remove();
+        submitWork.disabled = true;
+        fileInput.value = "";
+        titleWork.value = "";
+        closeModal(modal2);
+        openModal(modal1);
+    })
+};
 
 
+// Managing the appearance of the button Filter on home page when we click on it
+function styleOfButtonsFilter() {
 
+    let allButtons = [];
+    allButtons.push(buttonTOUS, buttonApparts, buttonObjet, buttonHR)
 
+    buttonTOUS.style.backgroundColor = "rgb(29, 97, 84)";
+    buttonTOUS.style.color = "white";
 
+    allButtons.forEach((btn) => {
 
+        btn.addEventListener("click", (event) => {
 
+            for (let i = 0; i < allButtons.length; i++) {
+                let btnAttribute = allButtons[i].getAttribute("data-clicked");
 
+                if (btnAttribute === "true") {
 
-
-
-
-
-
-
-
-
-
-
-    // Tabulations rules and Escape Rules for Modals /////////////////////////////////////////////////////////////////////
-
-    //for modal1
-    let focusablesElementsM1 = [];
-    const elementsInModal1 = Array.from(modal1.querySelectorAll("aside button"));
-
-    //for modal2
-    let focusablesElementsM2 = [];
-    const inputHidden = document.getElementById("photoWork");
-    const falseBtn = document.getElementById("falseBtn");
-    const elementsInModal2 = Array.from(modal2.querySelectorAll("aside button, input[type=file], input[type=text], select, input[type=submit]"));
-
-    // function for all modals
-    function TabEscRules(modalX, elemInModalX, focusablesElementsX) {
-
-        modalX.addEventListener("keydown", function (e) {
-
-            if (e.key === "Tab") {
-                e.preventDefault();
-
-                //Building an array including all buttons in the modal
-                focusablesElementsX = []
-                focusablesElementsX.push(...elemInModalX);
-                //searching the index of the button focused
-                let index = focusablesElementsX.indexOf(modalX.querySelector(':focus'));
-
-                if (e.shiftKey === true) { index--; }
-                else { index++; }
-
-                if (index < 0) { index = focusablesElementsX.length - 1; }
-                if (index >= focusablesElementsX.length) { index = 0; }
-
-                //we put the focus on the indexed button
-                focusablesElementsX[index].focus();
+                    allButtons[i].setAttribute("data-clicked", "false");
+                    allButtons[i].style.backgroundColor = "white";
+                    allButtons[i].style.color = "rgb(29, 97, 84)"
+                }
             }
-
-            //closing part
-            if (e.key === "Escape" || e.key === "Esc") {
-                closeModal(modalX);
-            }
-
-            if (document.activeElement === inputHidden) { falseBtn.style.outline = "2px solid blue" }
-            else { falseBtn.style.outline = "none" }
-
+            event.target.setAttribute("data-clicked", "true")
+            event.target.style.backgroundColor = "rgb(29, 97, 84)";
+            event.target.style.color = "white";
         });
-    }
-
-    // Calling function for modal1
-    TabEscRules(modal1, elementsInModal1, focusablesElementsM1);
-    // Calling function for modal2
-    TabEscRules(modal2, elementsInModal2, focusablesElementsM2);
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    })
+}
 
 
+// Let the deleting of button for change when we click on "logout" in the nav
+function clickLogOut() {
+
+    aLogout.addEventListener("click", () => {
+        window.localStorage.removeItem("userId");
+        window.localStorage.removeItem("token");
+    })
+};
+
+
+// Function for close modal 1 et modal 2 when we click outside the modals
+function ClickOutiseModal() {
+
+    document.addEventListener("click", (event) => {
+
+        if (!modal1.contains(event.target) && event.target !== modal1 && event.target != btnChangeWork && !modal2.contains(event.target)) 
+        { closeModal(modal1) }
+
+        if (!modal2.contains(event.target) && event.target !== modal2 && event.target !== btnAddPhoto && event.target != btnChangeWork && !modal1.contains(event.target)) 
+        { closeModal(modal2) }
+
+    })
+}
 
 
 
@@ -427,23 +208,117 @@ recoveryWorks.then(() => { // When promise is resolved:
 
 
 
+// initialization of main code
+async function init() {
 
+    worksGlobalVariable = await workDataService.getAll();
 
-
-
-
-
-
-
-
-
-
-
-
+    displayAllWorks();
+    buttonsHomePage();
+    styleOfButtonsFilter();
+    displayWorksModal1();
+    previewPicModal2();
+    removeEltsInModal2();
+    WhenClickOnBtnAddPhoto();
+    WhenClickOnSubtmitWork();
+    whenClickOnArrow();
+    classAPIdelete();
+    clickLogOut();
+    ClickOutiseModal();
+   
    
 
 
 
+    // variables for TabEscRules function
+    const elementsInModal1 = Array.from(modal1.querySelectorAll("aside button"));
+    const elementsInModal2 = Array.from(modal2.querySelectorAll("aside button, input[type=file], input[type=text], select, input[type=submit]"));
+
+    // Calling function for Modal1 rules
+    TabEscRules(modal1, elementsInModal1, 0, 1);
+    // Calling function for modal2 rules
+    TabEscRules(modal2, elementsInModal2, 1, 2);
+
+    // Calling function for open and close modal1
+    bttnChangeWorks.addEventListener("click", () => openModal(modal1));
+    crossForClose1.addEventListener("click", () => closeModal(modal1));
+
+    // Closing modal 2
+    crossForclose2.addEventListener("click", () => {
+        closeModal(modal2);
+    })
+
+    // displaying button "edit work" on home page if user signed in
+    if (testToken && testUserId !== null) {
+        btnChangeWork.style.display = "block";
+
+        aLogin.style.display = "none";
+        aLogout.style.display = "block"
+    }
+
+    // putting in bold the link "projets" in the nav
+    aProjets.style.fontWeight = "bold";
+
+
+
+
+
+}
+
+
+
+
+
+
+/*********** DEBUT DU SCRIPT ****************/
+
+// Targeting buttons from home page
+const buttonTOUS = document.querySelector(".bttnTous");
+const buttonObjet = document.querySelector(".bttnObjets");
+const buttonApparts = document.querySelector(".bttnApparts");
+const buttonHR = document.querySelector(".bttnHR");
+
+// Targeting elements in DOM for manage modals
+const html = document.querySelector(".html");
+const modal1 = document.getElementById("modal1");
+const modal2 = document.getElementById("modal2");
+const bttnChangeWorks = document.getElementById("btn-change-Work")
+const crossForClose1 = document.querySelector(".closeModal")
+
+// Display button "btnChangeWork" if "token" and "id" are saved ////////////////////////////////////////
+const testUserId = window.localStorage.getItem("userId");
+const testToken = window.localStorage.getItem("token");
+const btnChangeWork = document.getElementById("btn-change-Work");
+
+// Targeting element in DOM for displaying all works
+const containerWorks = document.getElementById("worksContainer");
+
+// Targeting element in DOM inside modal1
+const btnAddPhoto = document.getElementById('btnAddPhoto');
+const galleryPhoto = document.querySelector(".galleryPhoto");
+
+// Targeting element in DOM inside modal2
+const arrowReturn = document.getElementById("arrowForReturn");
+const crossForclose2 = document.getElementById("crossForclose2");
+const fileInput = document.getElementById("photoWork");
+const labelBtnFile = document.querySelector(".labelBtnFile");
+const formAddWork = document.querySelector(".form-addWork");
+const submitWork = document.getElementById("submitWork");
+const titleWork = document.getElementById("titleWork");
+
+// Targeting element in DOM on home page, in the nav
+const aLogin = document.getElementById("a-login");
+const aLogout = document.getElementById("a-logout");
+const aProjets = document.getElementById("nav-a-projets");
+
+
+
+
+const workDataService = new WorkDataService();
+let worksGlobalVariable = null
+
+// launch of the all functions
+init()
 
 
 
@@ -451,10 +326,6 @@ recoveryWorks.then(() => { // When promise is resolved:
 
 
 
-
-
-
-});
 
 
 

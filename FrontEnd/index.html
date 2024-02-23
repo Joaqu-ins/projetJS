@@ -4,14 +4,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<link rel="icon" type="image/x-icon" href="/assets/images/logo/favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
-	<script src="script/main.js" defer></script>
+	<script type="module" src="script/main.js" defer></script>
+	<script type="module" src="script/forModals.js" defer></script>
+	
+
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="./assets/modal.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
 		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
 		crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -22,10 +27,11 @@
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
-				<li><a href="index.html">projets</a></li>
-				<li>contact</li>
-				<li><a href="login.html">login</a></li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				<li ><a href="index.html" id="nav-a-projets">projets</a></li>
+				<li><a href="#">contact</a></li>
+				<li id="a-login"><a href="login.html">login</a></li>
+				<li id="a-logout"><a href="login.html">logout</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram" class="insta-logo"></li>
 			</ul>
 		</nav>
 	</header>
@@ -55,16 +61,22 @@
 
 
 			<div class="buttnFilter">
-				<button class="bttnTous">Tous</button>
-				<button class="bttnObjets">Objets</button>
-				<button class="bttnApparts">Appartements</button>
-				<button class="bttnHR">Hôtels & restaurants</button>
+				<button class="bttnTous" id="bttnTous" data-clicked="true">Tous</button>
+				<button class="bttnObjets" id="bttnObjets" data-clicked="false">Objets</button>
+				<button class="bttnApparts" data-clicked="false">Appartements</button>
+				<button class="bttnHR" data-clicked="false">Hôtels & restaurants</button>
 			</div>
 
-			<div class="gallery">
-			</div>
-
+		
 			
+ 			
+
+
+
+			<div id="worksContainer" class="gallery">
+			</div>
+
+
 		</section>
 		<section id="contact">
 			<h2>Contact</h2>
@@ -81,7 +93,7 @@
 		</section>
 
 
-		<!-- Modale pour modifier photos -->
+		<!-- Modale pour supprimer les travaux -->
 		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
 			aria-labelledby="titleModal" style="display: none;">
 
@@ -94,9 +106,12 @@
 				<div class="galleryPhoto">
 				</div>
 
-				<div class="HR"></div>
+				
+				<div class="HR" id="HR1"></div>
 
 				<button class="lastBtnInModal" id="btnAddPhoto">Ajouter une photo</button>
+
+			
 
 			</div>
 		</aside>
@@ -105,38 +120,45 @@
 			aria-labelledby="titleModal" style="display: none;">
 
 			<div class="modal-wrapper">
-
-				<button id="crossForclose2" class="closeModal"><i class="fa-solid fa-xmark"></i></button>
-
+				<div>
+					<button id="arrowForReturn"><i class="fa-solid fa-arrow-left"></i></button>
+					<button id="crossForclose2" class="closeModal"><i class="fa-solid fa-xmark"></i></button>
+				</div>
+				
 				<h3 class="titleModal">Ajout photo</h3>
 
 				<div class="container-add-photo">
 					<i id="iconPicture" class="fa-regular fa-image"></i>
 				</div>
 
+				<div id="divHRmodal2" class="HR"></div>
+
 				<form action="" class="form-addWork">
-					<div class="labelAndInputFile" >
-					<label for="photoWork" class="labelBtnFile"> <span id="falseBtn">+ Ajouter photo</span> jpg, png: 4Mo max </label>
-					<input type="file" name="photoWork" id="photoWork" style="position: absolute; left: -9999px;">
+					<div class="labelAndInputFile">
+						<label for="photoWork" class="labelBtnFile"> <span id="falseBtn">+ Ajouter photo</span> jpg,
+							png: 4Mo max </label>
+						<input type="file" name="photoWork" id="photoWork" style="position: absolute; left: -9999px;">
 					</div>
 					<label id="labelText" class="labelTypesTextAndSelect" for="titleWork">Titre</label>
 					<input type="text" name="titleWork" id="titleWork">
 
 					<label class="labelTypesTextAndSelect" for="category">Catégorie</label>
 					<select name="category" id="category">
-						<option value="Appartements">Appartements</option>
-						<option value="Hotels & restaurants">Hotels & restaurants </option>
-						<option value="Objets">Objets</option>
+						<option value="2">Appartements</option>
+						<option value="3">Hotels & restaurants </option>
+						<option value="1">Objets</option>
 					</select>
 
-					<div id="divHRmodal2" class="HR"></div>
-
-					<button type="submit" id="submitWork"> Valider</button>
+					<button type="submit" id="submitWork" class="lastBtnInModal" disabled="true"> Valider</button>
 
 				</form>
 
 			</div>
 		</aside>
+
+
+		<div id="snack-format">Le format du fichier importé est incorrect</div>
+		<div id="snack-title">Le format du titre est incorrect</div>
 
 
 	</main>
@@ -148,6 +170,13 @@
 			</ul>
 		</nav>
 	</footer>
+
+
+	
+
+
+
+
 </body>
 
 </html>
