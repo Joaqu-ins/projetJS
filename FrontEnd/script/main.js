@@ -5,29 +5,25 @@ import { previewPicModal2 } from "./forModals.js";
 import { removeEltsInModal2 } from "./forModals.js";
 import { sendWork } from "./callAPI.js";
 import { classAPIdelete } from "./callAPI.js";
-
-// Importing variables
 import { preview } from "./forModals.js";
 
 
 // Functions
-
 function displayAllWorks() {
     worksGlobalVariable.forEach((work) => {
         const imageElement = document.createElement("img");
-        imageElement.src = work.imageUrl
+        imageElement.src = work.imageUrl;
 
         const figcaptionElement = document.createElement("figcaption");
         figcaptionElement.textContent = work.title;
 
         const createWorkElement = document.createElement("figure");
-        createWorkElement.setAttribute('id', 'work-' + work.id)
+        createWorkElement.setAttribute('id', 'work-' + work.id);
         createWorkElement.classList.add("work");
-        createWorkElement.append(imageElement)
-        createWorkElement.append(figcaptionElement)
-        containerWorks.append(createWorkElement)
-    })
-};
+        createWorkElement.append(imageElement);
+        createWorkElement.append(figcaptionElement);
+        containerWorks.append(createWorkElement);
+    })};
 
 
 function filterByCategory(button, category) {
@@ -36,23 +32,22 @@ function filterByCategory(button, category) {
         const worksFiltered = worksGlobalVariable.filter(function (work) {
             return work.category.name === category;
         });
-        const works = Array.from(containerWorks.getElementsByClassName('work'))
+        const works = Array.from(containerWorks.getElementsByClassName('work'));
         works.forEach(work => {
-            work.classList.add('hidden')
+            work.classList.add('hidden');
         });
         worksFiltered.forEach(workFiltered => {
-            const workElement = document.getElementById('work-' + workFiltered.id)
-            workElement.classList.remove('hidden')
+            const workElement = document.getElementById('work-' + workFiltered.id);
+            workElement.classList.remove('hidden');
         });
-    })
-};
+    })};
 
 
 function buttonsHomePage() {
     buttonTOUS.addEventListener("click", () => {
-        const works = Array.from(containerWorks.getElementsByClassName('work'))
+        const works = Array.from(containerWorks.getElementsByClassName('work'));
         works.forEach(work => {
-            work.classList.remove('hidden')
+            work.classList.remove('hidden');
         });
     });
     filterByCategory(buttonObjet, "Objets");
@@ -60,10 +55,8 @@ function buttonsHomePage() {
     filterByCategory(buttonHR, "Hotels & restaurants");
 }
 
-
 function displayWorksModal1() {
     worksGlobalVariable.forEach(work => {
-
         const figureGallery = document.createElement("figure");
         const bttnDelete = document.createElement("button");
         bttnDelete.className = "bttnDeleteWork";
@@ -79,13 +72,40 @@ function displayWorksModal1() {
         image.src = work.imageUrl;
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
-    })
+    })};
 
-};
+
+    
+
+// Displaying in modal1 the las Work added
+function addLastWorkInModal1(){
+
+    const newFigureGallery = document.createElement("figure");
+    const newBttnDelete = document.createElement("button");
+    newBttnDelete.className = "bttnDeleteWork";
+    const newIconDelete = document.createElement("i");
+    newIconDelete.className = "fa-solid fa-trash-can";
+    newBttnDelete.appendChild(newIconDelete);
+    newFigureGallery.appendChild(newBttnDelete);
+    
+    let newIdWork = lastWorkAdded.id;
+    newBttnDelete.setAttribute('id', newIdWork);
+    
+    const imagePreview = document.createElement("img");
+    imagePreview.src = lastWorkAdded.imageUrl;
+    newFigureGallery.appendChild(imagePreview);
+    galleryPhoto.appendChild(newFigureGallery);
+    }
+
+
+
+
+
+
+
 
 
 const openModal = function (e) {
-
     e.setAttribute('aria-hidden', false);
     e.setAttribute('aria-modal', true);
     e.style.display = "block";
@@ -93,9 +113,7 @@ const openModal = function (e) {
     crossForClose1.focus();
 };
 
-
 const closeModal = function (e) {
-
     e.removeAttribute('aria-modal');
     e.setAttribute('aria-hidden', true);
     e.style.display = "none";
@@ -106,10 +124,8 @@ const closeModal = function (e) {
     submitWork.disabled = true;
 };
 
-
 // Here we open modal 2
 function WhenClickOnBtnAddPhoto() {
-
     btnAddPhoto.addEventListener("click", () => {
         //stop the automatic scroll according axe Y when we open modal2
         const scrollPosition = window.scrollY;
@@ -122,17 +138,36 @@ function WhenClickOnBtnAddPhoto() {
         labelBtnFile.style.display = "block";
         closeModal(modal1);
         html.style.backgroundColor = "#0000004D";
-    });
-}
+    })};
 
 
-function WhenClickOnSubtmitWork() {
-    submitWork.addEventListener("click", function (e) {
+
+ async function WhenClickOnSubtmitWork() {
+    submitWork.addEventListener("click", async function (e) {
         e.preventDefault();
-        sendWork();
+
+        lastWorkAdded= await sendWork();
+        // Code for displaying on home page the last work added
+        const newImage= document.createElement("img");
+        newImage.src= lastWorkAdded.imageUrl;
+        const newFigcaption = document.createElement("figcaption");
+        newFigcaption.textContent = lastWorkAdded.title;
+
+        const newFigure= document.createElement("figure");
+        newFigure.setAttribute('id', 'work-' + lastWorkAdded.id);
+        newFigure.classList.add("work");
+        newFigure.append(newImage);
+        newFigure.append(newFigcaption);
+       
+        containerWorks.append(newFigure);
+
         closeModal(modal2);
-    })
-};
+        addLastWorkInModal1();
+    })};
+
+
+
+
 
 
 // When we click on the arrow in the modals for turn back
@@ -144,70 +179,48 @@ function whenClickOnArrow() {
         titleWork.value = "";
         closeModal(modal2);
         openModal(modal1);
-    })
-};
+    })};
 
 
 // Managing the appearance of the button Filter on home page when we click on it
 function styleOfButtonsFilter() {
-
     let allButtons = [];
-    allButtons.push(buttonTOUS, buttonApparts, buttonObjet, buttonHR)
+    allButtons.push(buttonTOUS, buttonApparts, buttonObjet, buttonHR);
 
     buttonTOUS.style.backgroundColor = "rgb(29, 97, 84)";
     buttonTOUS.style.color = "white";
 
     allButtons.forEach((btn) => {
-
         btn.addEventListener("click", (event) => {
-
             for (let i = 0; i < allButtons.length; i++) {
                 let btnAttribute = allButtons[i].getAttribute("data-clicked");
 
                 if (btnAttribute === "true") {
-
                     allButtons[i].setAttribute("data-clicked", "false");
                     allButtons[i].style.backgroundColor = "white";
-                    allButtons[i].style.color = "rgb(29, 97, 84)"
-                }
-            }
-            event.target.setAttribute("data-clicked", "true")
+                    allButtons[i].style.color = "rgb(29, 97, 84)";
+                }}
+            event.target.setAttribute("data-clicked", "true");
             event.target.style.backgroundColor = "rgb(29, 97, 84)";
             event.target.style.color = "white";
-        });
-    })
-}
+        })
+    })};
 
 
 // Let the deleting of button for change when we click on "logout" in the nav
 function clickLogOut() {
-
     aLogout.addEventListener("click", () => {
         window.localStorage.removeItem("userId");
         window.localStorage.removeItem("token");
-    })
-};
+    })};
 
 
 // Function for close modal 1 et modal 2 when we click outside the modals
 function ClickOutiseModal() {
-
     document.addEventListener("click", (event) => {
-
-        if (!modal1.contains(event.target) && event.target !== modal1 && event.target != btnChangeWork && !modal2.contains(event.target)) 
-        { closeModal(modal1) }
-
-        if (!modal2.contains(event.target) && event.target !== modal2 && event.target !== btnAddPhoto && event.target != btnChangeWork && !modal1.contains(event.target)) 
-        { closeModal(modal2) }
-
-    })
-}
-
-
-
-
-
-
+        if (!modal1.contains(event.target) && event.target !== modal1 && event.target != btnChangeWork && !modal2.contains(event.target)) { closeModal(modal1) };
+        if (!modal2.contains(event.target) && event.target !== modal2 && event.target !== btnAddPhoto && event.target != btnChangeWork && !modal1.contains(event.target)) { closeModal(modal2) };
+    })};
 
 // initialization of main code
 async function init() {
@@ -226,10 +239,6 @@ async function init() {
     classAPIdelete();
     clickLogOut();
     ClickOutiseModal();
-   
-   
-
-
 
     // variables for TabEscRules function
     const elementsInModal1 = Array.from(modal1.querySelectorAll("aside button"));
@@ -254,24 +263,15 @@ async function init() {
         btnChangeWork.style.display = "block";
 
         aLogin.style.display = "none";
-        aLogout.style.display = "block"
+        aLogout.style.display = "block";
     }
 
     // putting in bold the link "projets" in the nav
     aProjets.style.fontWeight = "bold";
-
-
-
-
-
 }
 
 
-
-
-
-
-/*********** DEBUT DU SCRIPT ****************/
+/*********** START OF THE SCRIPT ****************/
 
 // Targeting buttons from home page
 const buttonTOUS = document.querySelector(".bttnTous");
@@ -312,14 +312,15 @@ const aLogin = document.getElementById("a-login");
 const aLogout = document.getElementById("a-logout");
 const aProjets = document.getElementById("nav-a-projets");
 
-
-
-
+// Getting data from API
 const workDataService = new WorkDataService();
-let worksGlobalVariable = null
+let worksGlobalVariable = null;
+
+let lastWorkAdded = null;
+
 
 // launch of the all functions
-init()
+init();
 
 
 

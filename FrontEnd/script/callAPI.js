@@ -4,36 +4,36 @@ const categoryWork = document.getElementById("category");
 const myHeaders = {
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${getToken}`
-}
+};
 
 
 export class WorkDataService {
-  apiUrl = 'http://localhost:5678/api/'
+  apiUrl = 'http://localhost:5678/api/';
 
 
   // function for get all works 
   async getAll() {
-    let data = null
+    let data = null;
 
     try {
       const response = await fetch(this.apiUrl + 'works');
-      if (!response.ok) { throw new Error(`${response.status} ${response.statusText}`) }
+      if (!response.ok) { throw new Error(`${response.status} ${response.statusText}`) };
       data = await response.json();
     }
     /*Error caught*/
-    catch (e) { alert(e) }
-    return data
+    catch (e) { alert(e) };
+    return data;
   }
 
 
   // function for add a new work
   async addWork() {
 
-    let data = new FormData()
+    let data = new FormData();
 
-    data.append('image', fileInput.files[0])
-    data.append('title', titleWork.value)
-    data.append('category', categoryWork.value)
+    data.append('image', fileInput.files[0]);
+    data.append('title', titleWork.value);
+    data.append('category', categoryWork.value);
 
     await fetch(this.apiUrl + 'works', {
       method: 'POST',
@@ -41,16 +41,14 @@ export class WorkDataService {
         'Authorization': `Bearer ${getToken}`
       },
       body: data
-    });
-  
-    location.reload();
+    })
   };
 
 
   // function for delete a work
   async deleteWork(ressource) {
 
-    await fetch(this.apiUrl+"works/" + ressource, {
+    await fetch(this.apiUrl + "works/" + ressource, {
       method: "DELETE",
       headers: myHeaders,
     });
@@ -61,11 +59,13 @@ export class WorkDataService {
 
 
 
-
-// exporting to main.js function for add Work
-export function sendWork() {
-  const addNewWork = new WorkDataService()
-  addNewWork.addWork()
+// Exporting to main.js function for add Work
+export async function sendWork() {
+  const addNewWork = new WorkDataService();
+  await addNewWork.addWork()
+  const AllWorks = await addNewWork.getAll()
+  const lastWorkAdded = AllWorks[AllWorks.length - 1];
+  return lastWorkAdded;
 };
 
 
@@ -75,10 +75,11 @@ export function classAPIdelete() {
   AllBtnDelete.forEach((element) =>
     element.addEventListener("click", () => {
       // nouvelle instanciation de la classe
-      const delW= new WorkDataService();
-      let cible= element.id;
+      const delW = new WorkDataService();
+      let cible = element.id;
       delW.deleteWork(cible);
-    }))};
+    }))
+};
 
 
 
