@@ -10,7 +10,6 @@ const myHeaders = {
 export class WorkDataService {
   apiUrl = 'http://localhost:5678/api/';
 
-
   // function for get all works 
   async getAll() {
     let data = null;
@@ -24,7 +23,6 @@ export class WorkDataService {
     catch (e) { alert(e) };
     return data;
   }
-
 
   // function for add a new work
   async addWork() {
@@ -44,42 +42,51 @@ export class WorkDataService {
     })
   };
 
-
   // function for delete a work
   async deleteWork(ressource) {
-
     await fetch(this.apiUrl + "works/" + ressource, {
       method: "DELETE",
       headers: myHeaders,
-    });
-    location.reload();
-  };
-
+    })};
 } // End of class WorkDataService
-
 
 
 // Exporting to main.js function for add Work
 export async function sendWork() {
+
   const addNewWork = new WorkDataService();
-  await addNewWork.addWork()
-  const AllWorks = await addNewWork.getAll()
-  const lastWorkAdded = AllWorks[AllWorks.length - 1];
+  await addNewWork.addWork();
+  // Getting last work for display after in modal1
+  const allWorks = await addNewWork.getAll();
+  const lastWorkAdded = allWorks[allWorks.length - 1];
   return lastWorkAdded;
 };
 
 
-// exporting to main.js function for delete a Work
+// exporting (to main.js) function for delete a Work
 export function classAPIdelete() {
-  const AllBtnDelete = document.querySelectorAll(".bttnDeleteWork");
-  AllBtnDelete.forEach((element) =>
-    element.addEventListener("click", () => {
-      // nouvelle instanciation de la classe
+ 
+  let allBtnDelete = document.querySelectorAll(".bttnDeleteWork");
+
+  allBtnDelete.forEach((bttnDelete) =>
+  bttnDelete.addEventListener("click", () => {
+      // new instanciation of the class
       const delW = new WorkDataService();
-      let cible = element.id;
+      let cible = bttnDelete.id;
+      bttnDelete.classList.add("work-"+ bttnDelete.id);
       delW.deleteWork(cible);
-    }))
+
+      // for delete work on home page
+      let workToDelete = document.getElementById("work-" + cible)
+      workToDelete.remove();
+
+     // for delete work displayed in gallery
+      let workIngallery= document.querySelector(".gallery-work-"+cible)
+      workIngallery.remove();
+    }));
+
 };
+
 
 
 

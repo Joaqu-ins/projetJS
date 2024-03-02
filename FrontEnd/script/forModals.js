@@ -7,10 +7,19 @@ const labelBtnFile = document.querySelector(".labelBtnFile");
 const fileInput = document.getElementById("photoWork");
 const titleWork = document.getElementById("titleWork");
 const btnAddPhoto = document.getElementById('btnAddPhoto');
+const crossForClose1 = document.querySelector(".closeModal")
 const crossForclose2 = document.getElementById("crossForclose2");
+const arrowReturn = document.getElementById("arrowForReturn");
+const modal1 = document.getElementById("modal1");
+const modal2 = document.getElementById("modal2");
+const btnChangeWork = document.getElementById("btn-change-Work");
+const html = document.documentElement;
+
 export const preview = document.createElement("img");
 export const submitWork = document.getElementById("submitWork");
 
+
+/******************************************* Functions for the modals ************************************************/
 
 // function for displaying message 
 function snackbar(x) {
@@ -19,7 +28,7 @@ function snackbar(x) {
 }
 
 
-// function for all modals
+// Setting the rules modal
 export function TabEscRules(modalX, elemInModalX, n, x) {
 
     modalX.addEventListener("keydown", function (e) {
@@ -47,7 +56,8 @@ export function TabEscRules(modalX, elemInModalX, n, x) {
         }
         if (document.activeElement === inputHidden) { falseBtn.style.outline = "2px solid blue" }
         else { falseBtn.style.outline = "none" }
-    })};
+    })
+};
 
 
 // Displaying preview of picture selected in "input type=file" for modal2 
@@ -86,7 +96,8 @@ export function previewPicModal2() {
             falseBtn.style.display = "none";
             formAddWork.style.paddingTop = "92px";
             labelBtnFile.style.display = "none";
-        }};
+        }
+    };
     fileInput.addEventListener("change", handleFileChange);
 };
 
@@ -99,7 +110,8 @@ export function removeEltsInModal2() {
             submitWork.disabled = false;
         } else {
             submitWork.disabled = true;
-        }};
+        }
+    };
     formAddWork.addEventListener("change", checkFormFilled);
     titleWork.addEventListener("input", checkFormFilled);
     window.addEventListener('beforeunload', function () {
@@ -111,6 +123,27 @@ export function removeEltsInModal2() {
     }
     crossForclose2.addEventListener("click", deletePreview);
     submitWork.addEventListener("click", deletePreview);
+};
+
+
+export const closeModal = function (e) {
+    e.removeAttribute('aria-modal');
+    e.setAttribute('aria-hidden', true);
+    e.style.display = "none";
+    html.style.backgroundColor = "#FFFEF8";
+    fileInput.value = "";
+    titleWork.value = "";
+    // we make the button submitWork no functional
+    submitWork.disabled = true;
+};
+
+
+export const openModal = function (e) {
+    e.setAttribute('aria-hidden', false);
+    e.setAttribute('aria-modal', true);
+    e.style.display = "block";
+    html.style.backgroundColor = "#0000004D";
+    crossForClose1.focus();
 };
 
 
@@ -131,10 +164,27 @@ export function WhenClickOnBtnAddPhoto() {
     });
     crossForclose2.addEventListener("click", () => {
         closeModal(modal2);
-    })};
+    })
+};
 
 
+// When we click on the arrow in the modals for turn back
+export function whenClickOnArrow() {
+    arrowReturn.addEventListener("click", () => {
+        preview.remove();
+        submitWork.disabled = true;
+        fileInput.value = "";
+        titleWork.value = "";
+        closeModal(modal2);
+        openModal(modal1);
+    })
+};
 
 
-
-
+// Function for close modal 1 et modal 2 when we click outside the modals
+export function ClickOutiseModal() {
+    document.addEventListener("click", (event) => {
+        if (!modal1.contains(event.target) && event.target !== modal1 && event.target != btnChangeWork && !modal2.contains(event.target)) { closeModal(modal1) };
+        if (!modal2.contains(event.target) && event.target !== modal2 && event.target !== btnAddPhoto && event.target != btnChangeWork && !modal1.contains(event.target)) { closeModal(modal2) };
+    })
+};

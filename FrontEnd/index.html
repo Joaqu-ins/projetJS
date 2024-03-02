@@ -16,7 +16,6 @@
 
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<link rel="stylesheet" href="./assets/modal.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
 		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
 		crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -51,6 +50,73 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
+
+
+
+		<!-- Modale1 pour supprimer les travaux -->
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
+			aria-labelledby="titleModal" style="display: none;">
+
+			<div class="modal-wrapper">
+
+				<button class="closeModal"><i class="fa-solid fa-xmark"></i></button>
+
+				<h3 class="titleModal">Galerie photo</h3>
+
+				<div class="galleryPhoto">
+				</div>
+
+				
+				<div class="HR" id="HR1"></div>
+
+				<button class="lastBtnInModal" id="btnAddPhoto">Ajouter une photo</button>
+
+			
+
+			</div>
+		</aside>
+
+		<!-- Modale2 pour ajouter des travaux -->
+		<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
+			aria-labelledby="titleModal" style="display: none;">
+
+			<div class="modal-wrapper">
+				<div>
+					<button id="arrowForReturn"><i class="fa-solid fa-arrow-left"></i></button>
+					<button id="crossForclose2" class="closeModal"><i class="fa-solid fa-xmark"></i></button>
+				</div>
+				
+				<h3 class="titleModal">Ajout photo</h3>
+
+				<div class="container-add-photo">
+					<i id="iconPicture" class="fa-regular fa-image"></i>
+				</div>
+
+				<div id="divHRmodal2" class="HR"></div>
+
+				<form action="" class="form-addWork">
+					<div class="labelAndInputFile">
+						<label for="photoWork" class="labelBtnFile"> <span id="falseBtn">+ Ajouter photo</span> jpg,
+							png: 4Mo max </label>
+						<input type="file" name="photoWork" id="photoWork" style="position: absolute; left: -9999px;">
+					</div>
+					<label id="labelText" class="labelTypesTextAndSelect" for="titleWork">Titre</label>
+					<input type="text" name="titleWork" id="titleWork">
+
+					<label class="labelTypesTextAndSelect" for="category">Catégorie</label>
+					<select name="category" id="category">
+						<option value="2">Appartements</option>
+						<option value="3">Hotels & restaurants </option>
+						<option value="1">Objets</option>
+					</select>
+
+					<button type="submit" id="submitWork" class="lastBtnInModal" disabled="true"> Valider</button>
+				</form>
+			</div>
+		</aside>
+
+
+
 		<section class="portfolio" id="portfolio">
 
 			<div class="titleAndButton">
@@ -89,68 +155,6 @@
 		</section>
 
 
-		<!-- Modale pour supprimer les travaux -->
-		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
-			aria-labelledby="titleModal" style="display: none;">
-
-			<div class="modal-wrapper">
-
-				<button class="closeModal"><i class="fa-solid fa-xmark"></i></button>
-
-				<h3 class="titleModal">Galerie photo</h3>
-
-				<div class="galleryPhoto">
-				</div>
-
-				
-				<div class="HR" id="HR1"></div>
-
-				<button class="lastBtnInModal" id="btnAddPhoto">Ajouter une photo</button>
-
-			
-
-			</div>
-		</aside>
-
-		<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-modal="false"
-			aria-labelledby="titleModal" style="display: none;">
-
-			<div class="modal-wrapper">
-				<div>
-					<button id="arrowForReturn"><i class="fa-solid fa-arrow-left"></i></button>
-					<button id="crossForclose2" class="closeModal"><i class="fa-solid fa-xmark"></i></button>
-				</div>
-				
-				<h3 class="titleModal">Ajout photo</h3>
-
-				<div class="container-add-photo">
-					<i id="iconPicture" class="fa-regular fa-image"></i>
-				</div>
-
-				<div id="divHRmodal2" class="HR"></div>
-
-				<form action="" class="form-addWork">
-					<div class="labelAndInputFile">
-						<label for="photoWork" class="labelBtnFile"> <span id="falseBtn">+ Ajouter photo</span> jpg,
-							png: 4Mo max </label>
-						<input type="file" name="photoWork" id="photoWork" style="position: absolute; left: -9999px;">
-					</div>
-					<label id="labelText" class="labelTypesTextAndSelect" for="titleWork">Titre</label>
-					<input type="text" name="titleWork" id="titleWork">
-
-					<label class="labelTypesTextAndSelect" for="category">Catégorie</label>
-					<select name="category" id="category">
-						<option value="2">Appartements</option>
-						<option value="3">Hotels & restaurants </option>
-						<option value="1">Objets</option>
-					</select>
-
-					<button type="submit" id="submitWork" class="lastBtnInModal" disabled="true"> Valider</button>
-
-				</form>
-
-			</div>
-		</aside>
 
 
 		<div id="snack-format">Le format ou la taille du fichier est incorrect</div>

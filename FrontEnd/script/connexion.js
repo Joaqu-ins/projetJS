@@ -15,7 +15,7 @@ function snackbar(x) {
 }
 
 // Managing login form
-formLogin.addEventListener("submit", function (event) {///////////////////////////////////
+formLogin.addEventListener("submit", function (event) {     
   event.preventDefault();
 
   if (document.querySelector("[name=email]").value === "") { snackbar(snackEmail) };
@@ -72,6 +72,6 @@ formLogin.addEventListener("submit", function (event) {/////////////////////////
 
 
 
-});///////////////////////////////////////////////////////////////////////////////////
+});
 
 
