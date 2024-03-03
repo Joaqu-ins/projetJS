@@ -5,7 +5,6 @@ import { previewPicModal2 } from "./forModals.js";
 import { removeEltsInModal2 } from "./forModals.js";
 import { sendWork } from "./callAPI.js";
 import { classAPIdelete } from "./callAPI.js";
-import { preview } from "./forModals.js";
 import { closeModal } from "./forModals.js";
 import { openModal } from "./forModals.js";
 import { WhenClickOnBtnAddPhoto } from "./forModals.js";
@@ -75,6 +74,7 @@ function displayWorksModal1() {
         figureGallery.appendChild(bttnDelete);
 
         let idWork = work.id;
+        console.log(idWork);
         bttnDelete.setAttribute('id', idWork);
 
         const image = document.createElement("img");
@@ -98,7 +98,7 @@ function addLastWorkInModal1() {
 
     let newIdWork = lastWorkAdded.id;
     newBttnDelete.setAttribute('id', newIdWork);
-    newFigureGallery.classList.add(`gallery-work-${+ lastWorkAdded.id}`)
+    newFigureGallery.classList.add(`gallery-work-${+ lastWorkAdded.id}`);
 
     const imagePreview = document.createElement("img");
     imagePreview.src = lastWorkAdded.imageUrl;
@@ -125,6 +125,7 @@ async function WhenClickOnSubtmitWork() {
 
         containerWorks.append(newFigure);
         worksGlobalVariable = await workDataService.getAll();
+        console.log(worksGlobalVariable);
         addLastWorkInModal1();
         // closing modal2
         closeModal(modal2);
@@ -185,7 +186,6 @@ async function init() {
     WhenClickOnBtnAddPhoto();
     WhenClickOnSubtmitWork();
     whenClickOnArrow();
-    classAPIdelete();
     clickLogOut();
     ClickOutiseModal();
 
@@ -212,6 +212,14 @@ async function init() {
 
     // putting in bold the link "projets" in the nav
     aProjets.style.fontWeight = "bold";
+
+    bttnChangeWorks.addEventListener("click", ()=> {
+    classAPIdelete();
+    })
+
+
+
+
 }
 
 
@@ -222,33 +230,26 @@ const buttonTOUS = document.querySelector(".bttnTous");
 const buttonObjet = document.querySelector(".bttnObjets");
 const buttonApparts = document.querySelector(".bttnApparts");
 const buttonHR = document.querySelector(".bttnHR");
-
 // Targeting elements in DOM for manage modals
 const modal1 = document.getElementById("modal1");
 const modal2 = document.getElementById("modal2");
 const bttnChangeWorks = document.getElementById("btn-change-Work")
 const crossForClose1 = document.querySelector(".closeModal")
-
 // Display button "btnChangeWork" if "token" and "id" are saved 
 const testUserId = window.localStorage.getItem("userId");
 const testToken = window.localStorage.getItem("token");
 const btnChangeWork = document.getElementById("btn-change-Work");
-
 // Targeting element in DOM for displaying all works
 const containerWorks = document.getElementById("worksContainer");
-
 // Targeting element in DOM inside modal1
 const galleryPhoto = document.querySelector(".galleryPhoto");
-
 // Targeting element in DOM inside modal2
 const crossForclose2 = document.getElementById("crossForclose2");
 const submitWork = document.getElementById("submitWork");
-
 // Targeting element in DOM on home page, in the nav
 const aLogin = document.getElementById("a-login");
 const aLogout = document.getElementById("a-logout");
 const aProjets = document.getElementById("nav-a-projets");
-
 // variables for TabEscRules function
 const elementsInModal1 = Array.from(modal1.querySelectorAll("aside button"));
 const elementsInModal2 = Array.from(modal2.querySelectorAll("aside button, input[type=file], input[type=text], select, input[type=submit]"));

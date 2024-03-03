@@ -47,7 +47,9 @@ export class WorkDataService {
     await fetch(this.apiUrl + "works/" + ressource, {
       method: "DELETE",
       headers: myHeaders,
-    })};
+    })
+  };
+
 } // End of class WorkDataService
 
 
@@ -65,27 +67,26 @@ export async function sendWork() {
 
 // exporting (to main.js) function for delete a Work
 export function classAPIdelete() {
- 
-  let allBtnDelete = document.querySelectorAll(".bttnDeleteWork");
+
+let allBtnDelete = document.querySelectorAll(".bttnDeleteWork");
 
   allBtnDelete.forEach((bttnDelete) =>
+  
+  // bttnDelete.append(dernierBouton);
+  
   bttnDelete.addEventListener("click", () => {
-      // new instanciation of the class
-      const delW = new WorkDataService();
       let cible = bttnDelete.id;
-      bttnDelete.classList.add("work-"+ bttnDelete.id);
+       // new instanciation of the class
+      const delW = new WorkDataService();
       delW.deleteWork(cible);
-
       // for delete work on home page
       let workToDelete = document.getElementById("work-" + cible)
       workToDelete.remove();
-
      // for delete work displayed in gallery
       let workIngallery= document.querySelector(".gallery-work-"+cible)
       workIngallery.remove();
     }));
-
-};
+} 
 
 
 
