@@ -24,7 +24,7 @@ formLogin.addEventListener("submit", function (event) {
   const login = {
     email: event.target.querySelector("[name=email]").value,
     password: event.target.querySelector("[name=password]").value
-  };
+  }
 
   // making payload
   const payLoad = JSON.stringify(login);
@@ -72,6 +72,6 @@ formLogin.addEventListener("submit", function (event) {
 
 
 
-});
+})
 
 

@@ -62,7 +62,7 @@ export async function sendWork() {
   const allWorks = await addNewWork.getAll();
   const lastWorkAdded = allWorks[allWorks.length - 1];
   return lastWorkAdded;
-};
+}
 
 
 // exporting (to main.js) function for delete a Work

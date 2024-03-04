@@ -28,7 +28,7 @@ function displayAllWorks() {
         createWorkElement.append(figcaptionElement);
         containerWorks.append(createWorkElement);
     })
-};
+}
 
 
 function filterByCategory(button, category) {
@@ -45,8 +45,8 @@ function filterByCategory(button, category) {
             const workElement = document.getElementById('work-' + workFiltered.id);
             workElement.classList.remove('hidden');
         });
-    })
-};
+    });
+}
 
 
 function buttonsHomePage() {
@@ -74,7 +74,6 @@ function displayWorksModal1() {
         figureGallery.appendChild(bttnDelete);
 
         let idWork = work.id;
-        console.log(idWork);
         bttnDelete.setAttribute('id', idWork);
 
         const image = document.createElement("img");
@@ -82,7 +81,7 @@ function displayWorksModal1() {
         figureGallery.appendChild(image);
         galleryPhoto.appendChild(figureGallery);
     })
-};
+}
 
 
 // Displaying in modal1 the last Work added
@@ -125,13 +124,12 @@ async function WhenClickOnSubtmitWork() {
 
         containerWorks.append(newFigure);
         worksGlobalVariable = await workDataService.getAll();
-        console.log(worksGlobalVariable);
         addLastWorkInModal1();
         // closing modal2
         closeModal(modal2);
 
     })
-};
+}
 
 
 // Managing the appearance of the button Filter on home page when we click on it
@@ -158,7 +156,7 @@ function styleOfButtonsFilter() {
             event.target.style.color = "white";
         })
     })
-};
+}
 
 
 // Let the deleting of button for change when we click on "logout" in the nav
@@ -167,7 +165,7 @@ function clickLogOut() {
         window.localStorage.removeItem("userId");
         window.localStorage.removeItem("token");
     })
-};
+}
 
 
 /******************************************* End of functions ************************************************/
@@ -213,6 +211,7 @@ async function init() {
     // putting in bold the link "projets" in the nav
     aProjets.style.fontWeight = "bold";
 
+    // let the update of variable allBtnDelete for the operation of classAPIdelete
     bttnChangeWorks.addEventListener("click", ()=> {
     classAPIdelete();
     })

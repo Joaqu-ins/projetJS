@@ -57,7 +57,7 @@ export function TabEscRules(modalX, elemInModalX, n, x) {
         if (document.activeElement === inputHidden) { falseBtn.style.outline = "2px solid blue" }
         else { falseBtn.style.outline = "none" }
     })
-};
+}
 
 
 // Displaying preview of picture selected in "input type=file" for modal2 
@@ -99,7 +99,7 @@ export function previewPicModal2() {
         }
     };
     fileInput.addEventListener("change", handleFileChange);
-};
+}
 
 
 // function for remove disabled mode on button submit work in modal2
@@ -123,7 +123,7 @@ export function removeEltsInModal2() {
     }
     crossForclose2.addEventListener("click", deletePreview);
     submitWork.addEventListener("click", deletePreview);
-};
+}
 
 
 export const closeModal = function (e) {
@@ -135,7 +135,7 @@ export const closeModal = function (e) {
     titleWork.value = "";
     // we make the button submitWork no functional
     submitWork.disabled = true;
-};
+}
 
 
 export const openModal = function (e) {
@@ -144,7 +144,7 @@ export const openModal = function (e) {
     e.style.display = "block";
     html.style.backgroundColor = "#0000004D";
     crossForClose1.focus();
-};
+}
 
 
 export function WhenClickOnBtnAddPhoto() {
@@ -165,7 +165,7 @@ export function WhenClickOnBtnAddPhoto() {
     crossForclose2.addEventListener("click", () => {
         closeModal(modal2);
     })
-};
+}
 
 
 // When we click on the arrow in the modals for turn back
@@ -178,7 +178,7 @@ export function whenClickOnArrow() {
         closeModal(modal2);
         openModal(modal1);
     })
-};
+}
 
 
 // Function for close modal 1 et modal 2 when we click outside the modals
@@ -187,4 +187,4 @@ export function ClickOutiseModal() {
         if (!modal1.contains(event.target) && event.target !== modal1 && event.target != btnChangeWork && !modal2.contains(event.target)) { closeModal(modal1) };
         if (!modal2.contains(event.target) && event.target !== modal2 && event.target !== btnAddPhoto && event.target != btnChangeWork && !modal1.contains(event.target)) { closeModal(modal2) };
     })
-};
+}
