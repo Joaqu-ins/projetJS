@@ -12,22 +12,23 @@
 	<script src="script/connexion.js" defer></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="./assets/login.css">
 </head>
 
 <body>
-	<header>
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+	<header id="header-login">
+		<h1 id="h1-login">Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
 				<li><a href="index.html">projets</a></li>
-				<li>contact</li>
-				<li><a href="login.html">login</a></li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				<li><a href="#">contact</a></li>
+				<li><a href="login.html" id="nav-a-login">login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram" class="insta-logo"></li>
 			</ul>
 		</nav>
 	</header>
 
-</body>
+
 
 <main>
 
@@ -52,18 +53,29 @@
 	</form>
 
 
- <!-- The actual snackbar -->
- <div id="snackbar404"> Mot de passe ou identifiant incorrect </div> 
- <div id="snackbar401"> Vous n'êtes pas autorisé </div> 
+	<!-- snackbar -->
+<div id="snack404">Utilisateur non trouvé</div>
+<div id="snack401">Utilisateur non autorisé</div>
+<div id="snackEmail">Veuillez saisir une adresse mail</div>
+<div id="snackPassW">Veuillez saisir un mot de passe</div>
+
+ 
 
 
 </main>
 
 
-<footer>
-<p> Mentions légales</p>
+<footer id="footer-login">
+	<nav>
+		<ul>
+			<li>Mentions Légales</li>
+		</ul>
+	</nav>
 </footer>
 
 
+
+
+</body>
 
 </html>

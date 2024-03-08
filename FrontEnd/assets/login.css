@@ -1,0 +1,68 @@
+
+
+/** Page Login***********************************************************************************/
+
+
+main {
+	min-height: 600px;
+}
+
+.form-login {
+	width: 30%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.title-login {
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+.form-login a {
+	display: block;
+	margin: auto;
+	color: #3D3D3D;
+}
+
+.form-login a:hover {
+	color: #B1663C;
+}
+
+
+.label-in-form-login {
+	margin-bottom: 5px;
+	color: #3D3D3D;
+}
+
+.email,
+.password {
+	display: flex;
+	flex-direction: column;
+}
+
+#email,
+#password {
+	height: 38px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: solid 1px white;
+}
+
+.btn-submit {
+
+	background-color: #1D6154;
+	color: white;
+	width: 50%;
+	margin: auto;
+	height: 35px;
+	border: solid 1px #1D6154;
+	border-radius: 25px;
+}
+
+
+#footer-login ul {
+	position: relative;
+	right: 10.8%;
+	
+}
